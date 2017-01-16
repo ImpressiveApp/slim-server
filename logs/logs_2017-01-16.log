@@ -1,0 +1,15 @@
+[INFO] [Mon Jan 16 11:42:42 pm 2017] |URL|POST http://localhost:7060/public/rest/getOrderHistory/?display=today
+[INFO] [Mon Jan 16 11:42:42 pm 2017] |200|0.014001 s|::1|POST http://localhost:7060/public/rest/getOrderHistory/?display=today
+[INFO] [Mon Jan 16 11:50:57 pm 2017] |URL|POST http://localhost:7060/public/rest/getTransactionHistory/?mobno=121&display=today
+[DEBUG] [Mon Jan 16 11:50:57 pm 2017] IN today
+[DEBUG] [Mon Jan 16 11:50:57 pm 2017] 0
+[INFO] [Mon Jan 16 11:50:57 pm 2017] |200|0.017002 s|::1|POST http://localhost:7060/public/rest/getTransactionHistory/?mobno=121&display=today
+[INFO] [Mon Jan 16 11:51:07 pm 2017] |URL|POST http://localhost:7060/public/rest/getTransactionHistory/?mobno=121&display=complete
+[DEBUG] [Mon Jan 16 11:51:07 pm 2017] 32
+[INFO] [Mon Jan 16 11:51:07 pm 2017] |200|0.015001 s|::1|POST http://localhost:7060/public/rest/getTransactionHistory/?mobno=121&display=complete
+[INFO] [Mon Jan 16 11:52:19 pm 2017] |URL|POST http://localhost:7060/public/rest/getCustomerHistory/
+[INFO] [Mon Jan 16 11:52:19 pm 2017] |200|0.052005 s|::1|POST http://localhost:7060/public/rest/getCustomerHistory/
+[INFO] [Mon Jan 16 11:53:03 pm 2017] |URL|POST http://localhost:7060/public/rest/getTransactionHistory/?mobno=121&display=today
+[DEBUG] [Mon Jan 16 11:53:03 pm 2017] IN today
+[DEBUG] [Mon Jan 16 11:53:03 pm 2017] 1
+[INFO] [Mon Jan 16 11:53:03 pm 2017] |200|0.014002 s|::1|POST http://localhost:7060/public/rest/getTransactionHistory/?mobno=121&display=today
