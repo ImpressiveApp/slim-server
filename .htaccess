@@ -1,0 +1,11 @@
+# Do not remove this line or mod_rewrite rules and search engine friendly URLs will stop working
+RewriteEngine On
+
+RewriteBase /public/
+
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^ index.php [QSA,L]
+
+# RewriteCond %{REQUEST_URI} rest/
+# RewriteRule ^rest/ index.php [QSA,L]

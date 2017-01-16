@@ -1,0 +1,3 @@
+[INFO] [Tue Jan 17 01:22:57 am 2017] |URL|GET http://localhost:7040/public/rest/getAllOpenOrders/
+[ERROR] [Tue Jan 17 01:22:57 am 2017] Method must be one of: POST
+[INFO] [Tue Jan 17 01:22:57 am 2017] |405|0.003001 s|::1|GET http://localhost:7040/public/rest/getAllOpenOrders/
