@@ -29,12 +29,16 @@ $app->post($pattern.'/getOpenOrders/','OrderDetails:getOpenOrders');
 // TimeSlots Table 
 $app->post($pattern.'/availableSlots/','TimeSlots:availableSlots');
 $app->post($pattern.'/updateTimeSlot/','TimeSlots:updateTimeSlot');
+$app->post($pattern.'/getSlots/','TimeSlots:getSlots');
+
 
 // Transactions Table 
 $app->post($pattern.'/getTransactionHistory/','Transactions:getTransactionHistory');
 
 // Promocodes Table 
 $app->post($pattern.'/createPromocode/','Promocodes:createPromocode');
+$app->post($pattern.'/getPromoCodes/','Promocodes:getPromoCodes');
+
 
 
 // Ratecard Table
@@ -49,6 +53,8 @@ $app->get($pattern.'/deleteExpiredPromocodes/','CronJobs:deleteExpiredPromocodes
 $app->get($pattern.'/allCronJobs/','CronJobs:allCronJobs');
 $app->get($pattern.'/deleteExpiredFestivalPromocodes/','CronJobs:deleteExpiredFestivalPromocodes');
 $app->get($pattern.'/deleteExpiredOtherPromocodes/','CronJobs:deleteExpiredOtherPromocodes');
+$app->get($pattern.'/createScheduledPromocodes/','CronJobs:createScheduledPromocodes');
+
 
 ////////////////////////////////////////
 // correct

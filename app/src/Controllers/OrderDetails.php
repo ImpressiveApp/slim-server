@@ -213,6 +213,20 @@ class OrderDetails extends Controller
         return $response->withJson($errresult);        
 	}
 
+    public function getSlots($current_date,$slot)
+    {
+        $handle = $this->db->prepare('Select * from time_slots where Slot_Date = :date');
+   
+        $handle->bindParam('date', $current_date);
+
+        $result = $handle->execute();
+        
+        $data = $handle->fetchAll();
+        $dataSend['Available_Slots'] = $data;
+        $slot_availability =$dataSend['Available_Slots'][0][$slot];
+        $available = ($slot_availability > 0);
+        return $available;
+    }
     public function createOrder($request, $response)
     {
         $args = $request->getParsedBody();
@@ -244,6 +258,8 @@ class OrderDetails extends Controller
 
             if($arr[0]['Account_status']=="Active") {
 
+
+               
                 $id=$arr[0]['Id'];
                
                 $handle = $this->db->prepare('insert into order_details(Customer_Mobno,Order_Status,No_Of_Items,Address,Type_Of_Clothes,Cost,Pickup_Slot,Delivery_Slot,Applied_Promocode) values(?,?,?,?,?,?,?,?,?)');
@@ -256,6 +272,29 @@ class OrderDetails extends Controller
                 $value =explode("_",$_REQUEST['Delivery_Slot']);
                 $delivery_slot=$value[0].'_'.$value[1];
                 $delivery_date = date('Y-m-d',strtotime($value[2]));
+
+                $valid_pickup=$this->getSlots($pickup_date,$pickup_slot);
+                $valid_delivery=$this->getSlots($delivery_date,$delivery_slot);
+
+
+                if( $valid_pickup==false) {
+                    $errresult['Resultcode'] = static::$messages['Resultcode_2'];
+                    $errresult['Message'] = $pickup_slot.' on '.$pickup_date.' '.static::$messages['Pickup_Slot_Unavailable'];
+                    $errresult['Data'] = static::$messages['No_Data'];
+                    $errresult['StatusCode'] = $entry_handle->errorCode();
+                    return $response
+                        ->withHeader('Content-Type', 'application/json')
+                        ->write(json_encode($errresult,JSON_PRETTY_PRINT));
+                }
+                if( $valid_delivery==false) {
+                    $errresult['Resultcode'] = static::$messages['Resultcode_2'];
+                    $errresult['Message'] = $delivery_slot.' on '.$delivery_date.' '.static::$messages['Delivery_Slot_Unavailable'];
+                    $errresult['Data'] = static::$messages['No_Data'];
+                    $errresult['StatusCode'] = $entry_handle->errorCode();
+                    return $response
+                        ->withHeader('Content-Type', 'application/json')
+                        ->write(json_encode($errresult,JSON_PRETTY_PRINT));
+                }
 
                 $handle->bindValue(1, $_REQUEST['Customer_Mobno']);
                 $handle->bindValue(2, $_REQUEST['Order_Status']);

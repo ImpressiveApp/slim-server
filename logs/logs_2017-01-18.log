@@ -1,0 +1,146 @@
+[INFO] [Wed Jan 18 12:03:10 am 2017] |URL|POST http://localhost:7050/public/rest/getPromoCodes/
+[INFO] [Wed Jan 18 12:03:10 am 2017] |200|-0.056311 s|::1|POST http://localhost:7050/public/rest/getPromoCodes/
+[INFO] [Wed Jan 18 12:15:31 am 2017] |URL|POST http://localhost:7050/public/rest/createPromocode/?name=Test500&criteria=Order_0&discount=10&message=50000&validfrom=1-1-2017&validto=30-1-2017&valid=
+[INFO] [Wed Jan 18 12:15:31 am 2017] |200|-0.515903 s|::1|POST http://localhost:7050/public/rest/createPromocode/?name=Test500&criteria=Order_0&discount=10&message=50000&validfrom=1-1-2017&validto=30-1-2017&valid=
+[INFO] [Wed Jan 18 12:17:11 am 2017] |URL|POST http://localhost:7050/public/rest/createPromocode/?name=Test501&criteria=Order_0&discount=10&message=50000&validfrom=1-1-2017&validto=30-1-2017&valid=
+[DEBUG] [Wed Jan 18 12:17:11 am 2017] 23 Customers can use Promocode Test501
+[INFO] [Wed Jan 18 12:17:11 am 2017] |200|0.296059 s|::1|POST http://localhost:7050/public/rest/createPromocode/?name=Test501&criteria=Order_0&discount=10&message=50000&validfrom=1-1-2017&validto=30-1-2017&valid=
+[INFO] [Wed Jan 18 12:17:45 am 2017] |URL|POST http://localhost:7050/public/rest/createPromocode/?name=Test501&criteria=Order_0&discount=10&message=50000&validfrom=20-1-2017&validto=30-1-2017&valid=
+[ERROR] [Wed Jan 18 12:17:45 am 2017] SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'Test501' for key 'Name' | C:\xampp\htdocs\My PHP Projects\impressiveapplication\ImpressiveAppSlimServer\slim-server\app\src\Controllers\Promocodes.php | line: 77
+[INFO] [Wed Jan 18 12:17:51 am 2017] |URL|POST http://localhost:7050/public/rest/createPromocode/?name=Test502&criteria=Order_0&discount=10&message=50000&validfrom=20-1-2017&validto=30-1-2017&valid=
+[INFO] [Wed Jan 18 12:17:51 am 2017] |200|0.041008 s|::1|POST http://localhost:7050/public/rest/createPromocode/?name=Test502&criteria=Order_0&discount=10&message=50000&validfrom=20-1-2017&validto=30-1-2017&valid=
+[INFO] [Wed Jan 18 12:20:01 am 2017] |URL|POST http://localhost:7050/public/rest/createPromocode/?name=Test502&criteria=Order_0&discount=10&message=50000&validfrom=20-1-2017&validto=30-1-2017&valid=
+[DEBUG] [Wed Jan 18 12:20:01 am 2017] 2017-01-20 is ahead of today 2017-01-18
+[ERROR] [Wed Jan 18 12:20:01 am 2017] SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'Test502' for key 'Name' | C:\xampp\htdocs\My PHP Projects\impressiveapplication\ImpressiveAppSlimServer\slim-server\app\src\Controllers\Promocodes.php | line: 79
+[INFO] [Wed Jan 18 12:20:08 am 2017] |URL|POST http://localhost:7050/public/rest/createPromocode/?name=Test503&criteria=Order_0&discount=10&message=50000&validfrom=20-1-2017&validto=30-1-2017&valid=
+[DEBUG] [Wed Jan 18 12:20:08 am 2017] 2017-01-20 is ahead of today 2017-01-18
+[INFO] [Wed Jan 18 12:20:08 am 2017] |200|0.027006 s|::1|POST http://localhost:7050/public/rest/createPromocode/?name=Test503&criteria=Order_0&discount=10&message=50000&validfrom=20-1-2017&validto=30-1-2017&valid=
+[INFO] [Wed Jan 18 12:31:25 am 2017] |URL|GET http://localhost:7050/public/rest/createInvalidPromocodes/
+[INFO] [Wed Jan 18 12:32:13 am 2017] |URL|GET http://localhost:7050/public/rest/createInvalidPromocodes/
+[INFO] [Wed Jan 18 12:32:13 am 2017] |200|0.014503 s|::1|GET http://localhost:7050/public/rest/createInvalidPromocodes/
+[INFO] [Wed Jan 18 12:33:04 am 2017] |URL|GET http://localhost:7050/public/rest/createInvalidPromocodes/
+[INFO] [Wed Jan 18 12:33:04 am 2017] |200|0.049010 s|::1|GET http://localhost:7050/public/rest/createInvalidPromocodes/
+[INFO] [Wed Jan 18 12:39:52 am 2017] |URL|GET http://localhost:7050/public/rest/createInvalidPromocodes/
+[INFO] [Wed Jan 18 12:39:52 am 2017] |200|0.015003 s|::1|GET http://localhost:7050/public/rest/createInvalidPromocodes/
+[INFO] [Wed Jan 18 12:40:46 am 2017] |URL|GET http://localhost:7050/public/rest/createInvalidPromocodes/
+[INFO] [Wed Jan 18 12:40:52 am 2017] |URL|GET http://localhost:7050/public/rest/createInvalidPromocodes/
+[INFO] [Wed Jan 18 12:40:52 am 2017] |200|0.017003 s|::1|GET http://localhost:7050/public/rest/createInvalidPromocodes/
+[INFO] [Wed Jan 18 12:41:16 am 2017] |URL|GET http://localhost:7050/public/rest/createInvalidPromocodes/
+[INFO] [Wed Jan 18 12:41:16 am 2017] |200|0.016003 s|::1|GET http://localhost:7050/public/rest/createInvalidPromocodes/
+[INFO] [Wed Jan 18 12:50:26 am 2017] |URL|GET http://localhost:7050/public/rest/createInvalidPromocodes/
+[INFO] [Wed Jan 18 12:50:26 am 2017] |200|0.132026 s|::1|GET http://localhost:7050/public/rest/createInvalidPromocodes/
+[INFO] [Wed Jan 18 12:51:15 am 2017] |URL|GET http://localhost:7050/public/rest/createInvalidPromocodes/
+[INFO] [Wed Jan 18 12:51:15 am 2017] |200|-0.870974 s|::1|GET http://localhost:7050/public/rest/createInvalidPromocodes/
+[INFO] [Wed Jan 18 12:53:00 am 2017] |URL|GET http://localhost:7050/public/rest/createScheduledPromocodes/
+[INFO] [Wed Jan 18 12:53:00 am 2017] |200|0.076515 s|::1|GET http://localhost:7050/public/rest/createScheduledPromocodes/
+[INFO] [Wed Jan 18 12:55:31 am 2017] |URL|GET http://localhost:7050/public/rest/createScheduledPromocodes/
+[INFO] [Wed Jan 18 12:55:31 am 2017] |200|0.067514 s|::1|GET http://localhost:7050/public/rest/createScheduledPromocodes/
+[INFO] [Wed Jan 18 12:55:48 am 2017] |URL|GET http://localhost:7050/public/rest/createScheduledPromocodes/
+[INFO] [Wed Jan 18 12:55:48 am 2017] |200|0.072515 s|::1|GET http://localhost:7050/public/rest/createScheduledPromocodes/
+[INFO] [Wed Jan 18 01:00:03 am 2017] |URL|GET http://localhost:7050/public/rest/createScheduledPromocodes/
+[INFO] [Wed Jan 18 01:00:03 am 2017] |200|0.094519 s|::1|GET http://localhost:7050/public/rest/createScheduledPromocodes/
+[INFO] [Wed Jan 18 01:00:18 am 2017] |URL|GET http://localhost:7050/public/rest/createScheduledPromocodes/
+[INFO] [Wed Jan 18 01:00:18 am 2017] |200|0.013503 s|::1|GET http://localhost:7050/public/rest/createScheduledPromocodes/
+[INFO] [Wed Jan 18 01:08:24 am 2017] |URL|GET http://localhost:7050/public/rest/allCronJobs/
+[INFO] [Wed Jan 18 01:09:26 am 2017] |URL|GET http://localhost:7050/public/rest/allCronJobs/
+[INFO] [Wed Jan 18 01:09:26 am 2017] |200|0.020004 s|::1|GET http://localhost:7050/public/rest/allCronJobs/
+[INFO] [Wed Jan 18 01:10:37 am 2017] |URL|GET http://localhost:7050/public/rest/allCronJobs/
+[INFO] [Wed Jan 18 01:10:37 am 2017] |200|0.020504 s|::1|GET http://localhost:7050/public/rest/allCronJobs/
+[INFO] [Wed Jan 18 01:11:19 am 2017] |URL|GET http://localhost:7050/public/rest/allCronJobs/
+[INFO] [Wed Jan 18 01:11:19 am 2017] |200|0.032006 s|::1|GET http://localhost:7050/public/rest/allCronJobs/
+[INFO] [Wed Jan 18 01:12:50 am 2017] |URL|GET http://localhost:7050/public/rest/allCronJobs/
+[INFO] [Wed Jan 18 01:12:50 am 2017] |200|0.025505 s|::1|GET http://localhost:7050/public/rest/allCronJobs/
+[INFO] [Wed Jan 18 01:13:05 am 2017] |URL|GET http://localhost:7050/public/rest/allCronJobs/
+[INFO] [Wed Jan 18 01:13:05 am 2017] |200|0.024505 s|::1|GET http://localhost:7050/public/rest/allCronJobs/
+[INFO] [Wed Jan 18 01:14:03 am 2017] |URL|GET http://localhost:7050/public/rest/allCronJobs/
+[INFO] [Wed Jan 18 01:14:03 am 2017] |200|0.035507 s|::1|GET http://localhost:7050/public/rest/allCronJobs/
+[INFO] [Wed Jan 18 01:15:45 am 2017] |URL|GET http://localhost:7050/public/rest/allCronJobs/
+[INFO] [Wed Jan 18 01:15:45 am 2017] |200|0.017503 s|::1|GET http://localhost:7050/public/rest/allCronJobs/
+[INFO] [Wed Jan 18 01:23:37 am 2017] |URL|POST http://localhost:7050/public/rest/getSlots/?date=21-12-2016
+[INFO] [Wed Jan 18 01:23:37 am 2017] |200|0.013503 s|::1|POST http://localhost:7050/public/rest/getSlots/?date=21-12-2016
+[INFO] [Wed Jan 18 01:25:53 am 2017] |URL|POST http://localhost:7050/public/rest/getSlots/?date=21-12-2016
+[INFO] [Wed Jan 18 01:25:53 am 2017] |200|0.014003 s|::1|POST http://localhost:7050/public/rest/getSlots/?date=21-12-2016
+[INFO] [Wed Jan 18 01:26:19 am 2017] |URL|POST http://localhost:7050/public/rest/getSlots/?date=21-12-2016
+[INFO] [Wed Jan 18 01:26:19 am 2017] |200|-0.986498 s|::1|POST http://localhost:7050/public/rest/getSlots/?date=21-12-2016
+[INFO] [Wed Jan 18 01:28:16 am 2017] |URL|POST http://localhost:7050/public/rest/getSlots/?date=21-12-2016
+[INFO] [Wed Jan 18 01:28:16 am 2017] |200|0.013503 s|::1|POST http://localhost:7050/public/rest/getSlots/?date=21-12-2016
+[INFO] [Wed Jan 18 01:35:43 am 2017] |URL|POST http://localhost:7050/public/rest/createOrder/?mobno=121&status=&address=&noOfItems=1&pickupSlot=Slot_1_21-12-2016&deliverySlot=Slot_2_21-12-2016&promocode=1&type=&isRefProcessed=
+[INFO] [Wed Jan 18 01:36:08 am 2017] |URL|POST http://localhost:7050/public/rest/createOrder/?mobno=121&status=&address=&noOfItems=1&pickupSlot=Slot_1_21-12-2016&deliverySlot=Slot_2_21-12-2016&promocode=1&type=&isRefProcessed=
+[INFO] [Wed Jan 18 01:36:44 am 2017] |URL|POST http://localhost:7050/public/rest/createOrder/?mobno=121&status=&address=&noOfItems=1&pickupSlot=Slot_1_21-12-2016&deliverySlot=Slot_2_21-12-2016&promocode=1&type=&isRefProcessed=
+[INFO] [Wed Jan 18 01:36:44 am 2017] |200|0.146029 s|::1|POST http://localhost:7050/public/rest/createOrder/?mobno=121&status=&address=&noOfItems=1&pickupSlot=Slot_1_21-12-2016&deliverySlot=Slot_2_21-12-2016&promocode=1&type=&isRefProcessed=
+[INFO] [Wed Jan 18 01:37:31 am 2017] |URL|POST http://localhost:7050/public/rest/getSlots/?date=21-12-2016
+[INFO] [Wed Jan 18 01:37:31 am 2017] |200|0.012502 s|::1|POST http://localhost:7050/public/rest/getSlots/?date=21-12-2016
+[INFO] [Wed Jan 18 01:37:41 am 2017] |URL|POST http://localhost:7050/public/rest/getSlots/?date=21-12-2016
+[INFO] [Wed Jan 18 01:37:41 am 2017] |200|0.013502 s|::1|POST http://localhost:7050/public/rest/getSlots/?date=21-12-2016
+[INFO] [Wed Jan 18 01:39:23 am 2017] |URL|POST http://localhost:7050/public/rest/createOrder/?mobno=121&status=&address=&noOfItems=1&pickupSlot=Slot_1_21-12-2016&deliverySlot=Slot_2_21-12-2016&promocode=1&type=&isRefProcessed=
+[INFO] [Wed Jan 18 01:39:23 am 2017] |200|-0.950990 s|::1|POST http://localhost:7050/public/rest/createOrder/?mobno=121&status=&address=&noOfItems=1&pickupSlot=Slot_1_21-12-2016&deliverySlot=Slot_2_21-12-2016&promocode=1&type=&isRefProcessed=
+[INFO] [Wed Jan 18 01:39:37 am 2017] |URL|POST http://localhost:7050/public/rest/getSlots/?date=21-12-2016
+[INFO] [Wed Jan 18 01:39:37 am 2017] |200|0.014003 s|::1|POST http://localhost:7050/public/rest/getSlots/?date=21-12-2016
+[INFO] [Wed Jan 18 01:42:04 am 2017] |URL|POST http://localhost:7050/public/rest/createOrder/?mobno=121&status=&address=&noOfItems=1&pickupSlot=Slot_1_21-12-2016&deliverySlot=Slot_2_21-12-2016&promocode=1&type=&isRefProcessed=
+[INFO] [Wed Jan 18 01:42:04 am 2017] |200|0.040508 s|::1|POST http://localhost:7050/public/rest/createOrder/?mobno=121&status=&address=&noOfItems=1&pickupSlot=Slot_1_21-12-2016&deliverySlot=Slot_2_21-12-2016&promocode=1&type=&isRefProcessed=
+[INFO] [Wed Jan 18 01:42:36 am 2017] |URL|POST http://localhost:7050/public/rest/createOrder/?mobno=121&status=&address=&noOfItems=1&pickupSlot=Slot_1_21-12-2016&deliverySlot=Slot_2_21-12-2016&promocode=1&type=&isRefProcessed=
+[INFO] [Wed Jan 18 01:42:36 am 2017] |200|0.103020 s|::1|POST http://localhost:7050/public/rest/createOrder/?mobno=121&status=&address=&noOfItems=1&pickupSlot=Slot_1_21-12-2016&deliverySlot=Slot_2_21-12-2016&promocode=1&type=&isRefProcessed=
+[INFO] [Wed Jan 18 01:42:54 am 2017] |URL|POST http://localhost:7050/public/rest/createOrder/?mobno=121&status=&address=&noOfItems=1&pickupSlot=Slot_1_21-12-2016&deliverySlot=Slot_2_21-12-2016&promocode=1&type=&isRefProcessed=
+[INFO] [Wed Jan 18 01:42:54 am 2017] |200|0.049510 s|::1|POST http://localhost:7050/public/rest/createOrder/?mobno=121&status=&address=&noOfItems=1&pickupSlot=Slot_1_21-12-2016&deliverySlot=Slot_2_21-12-2016&promocode=1&type=&isRefProcessed=
+[INFO] [Wed Jan 18 01:43:03 am 2017] |URL|POST http://localhost:7050/public/rest/getSlots/?date=21-12-2016
+[INFO] [Wed Jan 18 01:43:03 am 2017] |200|0.014503 s|::1|POST http://localhost:7050/public/rest/getSlots/?date=21-12-2016
+[INFO] [Wed Jan 18 01:43:08 am 2017] |URL|POST http://localhost:7050/public/rest/createOrder/?mobno=121&status=&address=&noOfItems=1&pickupSlot=Slot_1_21-12-2016&deliverySlot=Slot_2_21-12-2016&promocode=1&type=&isRefProcessed=
+[INFO] [Wed Jan 18 01:43:08 am 2017] |200|0.050510 s|::1|POST http://localhost:7050/public/rest/createOrder/?mobno=121&status=&address=&noOfItems=1&pickupSlot=Slot_1_21-12-2016&deliverySlot=Slot_2_21-12-2016&promocode=1&type=&isRefProcessed=
+[INFO] [Wed Jan 18 01:45:13 am 2017] |URL|POST http://localhost:7050/public/rest/createOrder/?mobno=121&status=&address=&noOfItems=1&pickupSlot=Slot_1_21-12-2016&deliverySlot=Slot_2_21-12-2016&promocode=1&type=&isRefProcessed=
+[INFO] [Wed Jan 18 01:45:13 am 2017] |200|0.048010 s|::1|POST http://localhost:7050/public/rest/createOrder/?mobno=121&status=&address=&noOfItems=1&pickupSlot=Slot_1_21-12-2016&deliverySlot=Slot_2_21-12-2016&promocode=1&type=&isRefProcessed=
+[INFO] [Wed Jan 18 01:45:32 am 2017] |URL|POST http://localhost:7050/public/rest/getSlots/?date=21-12-2016
+[INFO] [Wed Jan 18 01:45:32 am 2017] |200|0.013002 s|::1|POST http://localhost:7050/public/rest/getSlots/?date=21-12-2016
+[INFO] [Wed Jan 18 01:46:57 am 2017] |URL|POST http://localhost:7050/public/rest/getSlots/?date=21-12-2016
+[INFO] [Wed Jan 18 01:46:57 am 2017] |200|0.025505 s|::1|POST http://localhost:7050/public/rest/getSlots/?date=21-12-2016
+[INFO] [Wed Jan 18 01:48:02 am 2017] |URL|POST http://localhost:7050/public/rest/getSlots/?date=21-12-2016
+[INFO] [Wed Jan 18 01:48:02 am 2017] |200|0.024005 s|::1|POST http://localhost:7050/public/rest/getSlots/?date=21-12-2016
+[INFO] [Wed Jan 18 01:48:08 am 2017] |URL|POST http://localhost:7050/public/rest/createOrder/?mobno=121&status=&address=&noOfItems=1&pickupSlot=Slot_1_21-12-2016&deliverySlot=Slot_2_21-12-2016&promocode=1&type=&isRefProcessed=
+[INFO] [Wed Jan 18 01:48:08 am 2017] |200|0.018004 s|::1|POST http://localhost:7050/public/rest/createOrder/?mobno=121&status=&address=&noOfItems=1&pickupSlot=Slot_1_21-12-2016&deliverySlot=Slot_2_21-12-2016&promocode=1&type=&isRefProcessed=
+[INFO] [Wed Jan 18 01:48:16 am 2017] |URL|POST http://localhost:7050/public/rest/getSlots/?date=21-12-2016
+[INFO] [Wed Jan 18 01:48:16 am 2017] |200|0.012003 s|::1|POST http://localhost:7050/public/rest/getSlots/?date=21-12-2016
+[INFO] [Wed Jan 18 01:57:21 am 2017] |URL|POST http://localhost:7050/public/rest/getSlots/?date=21-12-2016
+[INFO] [Wed Jan 18 01:57:48 am 2017] |URL|POST http://localhost:7050/public/rest/getSlots/?date=21-12-2016
+[INFO] [Wed Jan 18 01:57:48 am 2017] |200|0.013002 s|::1|POST http://localhost:7050/public/rest/getSlots/?date=21-12-2016
+[INFO] [Wed Jan 18 01:57:57 am 2017] |URL|POST http://localhost:7050/public/rest/createOrder/?mobno=121&status=&address=&noOfItems=1&pickupSlot=Slot_1_21-12-2016&deliverySlot=Slot_2_21-12-2016&promocode=1&type=&isRefProcessed=
+[INFO] [Wed Jan 18 01:58:12 am 2017] |URL|POST http://localhost:7050/public/rest/createOrder/?mobno=121&status=&address=&noOfItems=1&pickupSlot=Slot_1_21-12-2016&deliverySlot=Slot_2_21-12-2016&promocode=1&type=&isRefProcessed=
+[INFO] [Wed Jan 18 01:58:12 am 2017] |200|0.021504 s|::1|POST http://localhost:7050/public/rest/createOrder/?mobno=121&status=&address=&noOfItems=1&pickupSlot=Slot_1_21-12-2016&deliverySlot=Slot_2_21-12-2016&promocode=1&type=&isRefProcessed=
+[INFO] [Wed Jan 18 01:58:52 am 2017] |URL|POST http://localhost:7050/public/rest/createOrder/?mobno=121&status=&address=&noOfItems=1&pickupSlot=Slot_1_21-12-2016&deliverySlot=Slot_2_21-12-2016&promocode=1&type=&isRefProcessed=
+[INFO] [Wed Jan 18 01:58:52 am 2017] |200|0.014503 s|::1|POST http://localhost:7050/public/rest/createOrder/?mobno=121&status=&address=&noOfItems=1&pickupSlot=Slot_1_21-12-2016&deliverySlot=Slot_2_21-12-2016&promocode=1&type=&isRefProcessed=
+[INFO] [Wed Jan 18 01:59:29 am 2017] |URL|POST http://localhost:7050/public/rest/createOrder/?mobno=121&status=&address=&noOfItems=1&pickupSlot=Slot_1_21-12-2016&deliverySlot=Slot_2_21-12-2016&promocode=1&type=&isRefProcessed=
+[INFO] [Wed Jan 18 01:59:29 am 2017] |200|0.023505 s|::1|POST http://localhost:7050/public/rest/createOrder/?mobno=121&status=&address=&noOfItems=1&pickupSlot=Slot_1_21-12-2016&deliverySlot=Slot_2_21-12-2016&promocode=1&type=&isRefProcessed=
+[INFO] [Wed Jan 18 01:59:54 am 2017] |URL|POST http://localhost:7050/public/rest/createOrder/?mobno=121&status=&address=&noOfItems=1&pickupSlot=Slot_4_21-12-2016&deliverySlot=Slot_2_21-12-2016&promocode=1&type=&isRefProcessed=
+[INFO] [Wed Jan 18 01:59:54 am 2017] |200|0.054511 s|::1|POST http://localhost:7050/public/rest/createOrder/?mobno=121&status=&address=&noOfItems=1&pickupSlot=Slot_4_21-12-2016&deliverySlot=Slot_2_21-12-2016&promocode=1&type=&isRefProcessed=
+[INFO] [Wed Jan 18 02:00:03 am 2017] |URL|POST http://localhost:7050/public/rest/getSlots/?date=21-12-2016
+[INFO] [Wed Jan 18 02:00:03 am 2017] |200|0.015003 s|::1|POST http://localhost:7050/public/rest/getSlots/?date=21-12-2016
+[INFO] [Wed Jan 18 02:00:18 am 2017] |URL|POST http://localhost:7050/public/rest/createOrder/?mobno=121&status=&address=&noOfItems=1&pickupSlot=Slot_4_21-12-2016&deliverySlot=Slot_2_21-12-2016&promocode=1&type=&isRefProcessed=
+[INFO] [Wed Jan 18 02:00:18 am 2017] |200|0.056012 s|::1|POST http://localhost:7050/public/rest/createOrder/?mobno=121&status=&address=&noOfItems=1&pickupSlot=Slot_4_21-12-2016&deliverySlot=Slot_2_21-12-2016&promocode=1&type=&isRefProcessed=
+[INFO] [Wed Jan 18 02:00:22 am 2017] |URL|POST http://localhost:7050/public/rest/createOrder/?mobno=121&status=&address=&noOfItems=1&pickupSlot=Slot_4_21-12-2016&deliverySlot=Slot_2_21-12-2016&promocode=1&type=&isRefProcessed=
+[INFO] [Wed Jan 18 02:00:22 am 2017] |200|0.040008 s|::1|POST http://localhost:7050/public/rest/createOrder/?mobno=121&status=&address=&noOfItems=1&pickupSlot=Slot_4_21-12-2016&deliverySlot=Slot_2_21-12-2016&promocode=1&type=&isRefProcessed=
+[INFO] [Wed Jan 18 02:00:25 am 2017] |URL|POST http://localhost:7050/public/rest/createOrder/?mobno=121&status=&address=&noOfItems=1&pickupSlot=Slot_4_21-12-2016&deliverySlot=Slot_2_21-12-2016&promocode=1&type=&isRefProcessed=
+[INFO] [Wed Jan 18 02:00:25 am 2017] |200|0.014503 s|::1|POST http://localhost:7050/public/rest/createOrder/?mobno=121&status=&address=&noOfItems=1&pickupSlot=Slot_4_21-12-2016&deliverySlot=Slot_2_21-12-2016&promocode=1&type=&isRefProcessed=
+[INFO] [Wed Jan 18 02:00:31 am 2017] |URL|POST http://localhost:7050/public/rest/getSlots/?date=21-12-2016
+[INFO] [Wed Jan 18 02:00:31 am 2017] |200|0.013003 s|::1|POST http://localhost:7050/public/rest/getSlots/?date=21-12-2016
+[INFO] [Wed Jan 18 02:02:35 am 2017] |URL|POST http://localhost:7050/public/rest/createOrder/?mobno=121&status=&address=&noOfItems=1&pickupSlot=Slot_4_21-12-2016&deliverySlot=Slot_2_21-12-2016&promocode=1&type=&isRefProcessed=
+[INFO] [Wed Jan 18 02:02:35 am 2017] |200|0.034507 s|::1|POST http://localhost:7050/public/rest/createOrder/?mobno=121&status=&address=&noOfItems=1&pickupSlot=Slot_4_21-12-2016&deliverySlot=Slot_2_21-12-2016&promocode=1&type=&isRefProcessed=
+[INFO] [Wed Jan 18 02:02:39 am 2017] |URL|POST http://localhost:7050/public/rest/getSlots/?date=21-12-2016
+[INFO] [Wed Jan 18 02:02:39 am 2017] |200|0.013002 s|::1|POST http://localhost:7050/public/rest/getSlots/?date=21-12-2016
+[INFO] [Wed Jan 18 02:02:58 am 2017] |URL|POST http://localhost:7050/public/rest/createOrder/?mobno=121&status=&address=&noOfItems=1&pickupSlot=Slot_4_21-12-2016&deliverySlot=Slot_2_21-12-2016&promocode=1&type=&isRefProcessed=
+[INFO] [Wed Jan 18 02:02:58 am 2017] |200|0.018004 s|::1|POST http://localhost:7050/public/rest/createOrder/?mobno=121&status=&address=&noOfItems=1&pickupSlot=Slot_4_21-12-2016&deliverySlot=Slot_2_21-12-2016&promocode=1&type=&isRefProcessed=
+[INFO] [Wed Jan 18 02:03:04 am 2017] |URL|POST http://localhost:7050/public/rest/getSlots/?date=21-12-2016
+[INFO] [Wed Jan 18 02:03:04 am 2017] |200|0.048510 s|::1|POST http://localhost:7050/public/rest/getSlots/?date=21-12-2016
+[INFO] [Wed Jan 18 02:03:16 am 2017] |URL|POST http://localhost:7050/public/rest/createOrder/?mobno=121&status=&address=&noOfItems=1&pickupSlot=Slot_4_21-12-2016&deliverySlot=Slot_2_21-12-2016&promocode=1&type=&isRefProcessed=
+[INFO] [Wed Jan 18 02:03:16 am 2017] |200|0.053510 s|::1|POST http://localhost:7050/public/rest/createOrder/?mobno=121&status=&address=&noOfItems=1&pickupSlot=Slot_4_21-12-2016&deliverySlot=Slot_2_21-12-2016&promocode=1&type=&isRefProcessed=
+[INFO] [Wed Jan 18 02:03:20 am 2017] |URL|POST http://localhost:7050/public/rest/getSlots/?date=21-12-2016
+[INFO] [Wed Jan 18 02:03:20 am 2017] |200|0.013503 s|::1|POST http://localhost:7050/public/rest/getSlots/?date=21-12-2016
+[INFO] [Wed Jan 18 02:03:26 am 2017] |URL|POST http://localhost:7050/public/rest/createOrder/?mobno=121&status=&address=&noOfItems=1&pickupSlot=Slot_4_21-12-2016&deliverySlot=Slot_2_21-12-2016&promocode=1&type=&isRefProcessed=
+[INFO] [Wed Jan 18 02:03:26 am 2017] |200|0.014502 s|::1|POST http://localhost:7050/public/rest/createOrder/?mobno=121&status=&address=&noOfItems=1&pickupSlot=Slot_4_21-12-2016&deliverySlot=Slot_2_21-12-2016&promocode=1&type=&isRefProcessed=
+[INFO] [Wed Jan 18 02:05:30 am 2017] |URL|POST http://localhost:7050/public/rest/createOrder/?mobno=121&status=&address=&noOfItems=1&pickupSlot=Slot_7_21-12-2016&deliverySlot=Slot_2_21-12-2016&promocode=1&type=&isRefProcessed=
+[INFO] [Wed Jan 18 02:05:30 am 2017] |200|0.015503 s|::1|POST http://localhost:7050/public/rest/createOrder/?mobno=121&status=&address=&noOfItems=1&pickupSlot=Slot_7_21-12-2016&deliverySlot=Slot_2_21-12-2016&promocode=1&type=&isRefProcessed=
+[INFO] [Wed Jan 18 02:08:28 am 2017] |URL|POST http://localhost:7050/public/rest/createOrder/?mobno=121&status=&address=&noOfItems=1&pickupSlot=Slot_7_21-12-2016&deliverySlot=Slot_2_21-12-2016&promocode=1&type=&isRefProcessed=
+[INFO] [Wed Jan 18 02:08:28 am 2017] |200|0.020504 s|::1|POST http://localhost:7050/public/rest/createOrder/?mobno=121&status=&address=&noOfItems=1&pickupSlot=Slot_7_21-12-2016&deliverySlot=Slot_2_21-12-2016&promocode=1&type=&isRefProcessed=
+[INFO] [Wed Jan 18 02:08:56 am 2017] |URL|POST http://localhost:7050/public/rest/createOrder/?mobno=121&status=&address=&noOfItems=1&pickupSlot=Slot_7_21-12-2016&deliverySlot=Slot_8_21-12-2016&promocode=1&type=&isRefProcessed=
+[INFO] [Wed Jan 18 02:08:56 am 2017] |200|0.061012 s|::1|POST http://localhost:7050/public/rest/createOrder/?mobno=121&status=&address=&noOfItems=1&pickupSlot=Slot_7_21-12-2016&deliverySlot=Slot_8_21-12-2016&promocode=1&type=&isRefProcessed=
+[INFO] [Wed Jan 18 02:08:59 am 2017] |URL|POST http://localhost:7050/public/rest/getSlots/?date=21-12-2016
+[INFO] [Wed Jan 18 02:08:59 am 2017] |200|0.012003 s|::1|POST http://localhost:7050/public/rest/getSlots/?date=21-12-2016
+[INFO] [Wed Jan 18 02:09:33 am 2017] |URL|POST http://localhost:7050/public/rest/createOrder/?mobno=121&status=&address=&noOfItems=1&pickupSlot=Slot_7_21-12-2016&deliverySlot=Slot_8_21-12-2016&promocode=1&type=&isRefProcessed=
+[INFO] [Wed Jan 18 02:09:33 am 2017] |200|0.066514 s|::1|POST http://localhost:7050/public/rest/createOrder/?mobno=121&status=&address=&noOfItems=1&pickupSlot=Slot_7_21-12-2016&deliverySlot=Slot_8_21-12-2016&promocode=1&type=&isRefProcessed=

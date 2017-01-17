@@ -17,8 +17,6 @@ class Controller
         //General 
         'Data_false' => 'No Records Found.',
         'Data_true'=> 'Data Retrieved Successfully.',
-
-
         //'No_Data'=> '{}',
 //'No_Data'=>  array(),
 'No_Data'=>  null,
@@ -26,6 +24,8 @@ class Controller
 
         'Resultcode_0' => 0,
         'Resultcode_1' => 1,
+        'Resultcode_2' => 2,
+
 
         //CustomerDetails Table 
         'Admin' => 'Admin',
@@ -61,10 +61,12 @@ class Controller
        
         'Promocode_Used' => 'Promocode has been used.',
         'Timeslot_Updated' => 'Timeslot Updated.',
-
         // TimeSlots Table
         'No_Slots' => 'No Slots on or after ',
+        'Pickup_Slot_Unavailable' => 'Pickup Slot unavailable. Please choose another Timeslot.',
+        'Delivery_Slot_Unavailable' => 'Delivery Slot unavailable. Please choose another Timeslot.',
 
+         
         //Promocodes
         'Promocode_Created' => 'Promocode has been Created.',
         'Criteria_All' => 'All',
@@ -85,10 +87,10 @@ class Controller
         'Customers_Updated' => ' Customers Updated.',
         'Promocodes_Deleted_CustomerDetails' => ' Promocodes Deleted from CustomerDetails Table.',
         'Promocodes_Deleted_Promocodes' => ' Promocodes Deleted from Promocodes Table.',
-
-        
+         
         'Cron_Job_referralcodeProcessor_Start' =>'Cron Job referralcodeProcessor Started.',
         'Cron_Job_referralcodeProcessor_End' =>'Cron Job referralcodeProcessor Ended.',
+
         'Cron_Job_deleteExpiredFestivalPromocode_Start' =>'Cron Job deleteExpiredFestivalPromocode Started.',
         'Cron_Job_deleteExpiredFestivalPromocode_End' =>'Cron Job deleteExpiredFestivalPromocode Ended.',
 
@@ -97,6 +99,11 @@ class Controller
 
         'Cron_Job_deleteExpiredOtherPromocode_Start' =>'Cron Job deleteExpiredOtherPromocode Started.',
         'Cron_Job_deleteExpiredOtherPromocode_End' =>'Cron Job deleteExpiredOtherPromocode Ended.',
+
+
+        'Cron_Job_createScheduledPromocodes_Start' =>'Cron Job createScheduledPromocodes Started.',
+        'Cron_Job_createScheduledPromocodes_End' =>'Cron Job createScheduledPromocodes Ended.',
+
 
         // ReferalCode
         'ReferalCode_100' => 'Rs. 100 Added to your Wallet for using Referal code on creating Account.',

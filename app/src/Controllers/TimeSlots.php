@@ -4,6 +4,45 @@ namespace App\Controllers;
 
 class TimeSlots extends Controller
 {
+    public function getSlots($request, $response)
+    {
+        //$args = $request->getQueryParams();
+        $args = $request->getParsedBody();
+        
+        $handle = $this->db->prepare('Select * from time_slots where Slot_Date= :date');
+   
+        $today = date("Y-m-d");
+        $date = strtotime($args['date']);
+        $current_date = date('Y-m-d',$date);
+        $handle->bindParam('date', $current_date);
+
+        $result = $handle->execute();
+        
+        $data = $handle->fetchAll();
+        $dataSend['Available_Slots'] = $data;
+     $errresult['Mess'] =$dataSend['Available_Slots'][0]['Slot_1'];
+$errresult['res']= ($errresult['Mess']>=8);
+
+        $errresult['Resultcode'] = static::$messages['Resultcode_0'];;
+
+        if($data) {
+            $errresult['Message'] = static::$messages['Data_true'];
+            $errresult['Data'] = $dataSend;
+        }
+        else {
+            $errresult['Message'] = static::$messages['Data_false'].' '.static::$messages['No_Slots'].date('d-m-Y',$date).'.';
+            $errresult['Data'] = static::$messages['No_Data'];
+        }
+      
+        $errresult['StatusCode'] = $handle->errorCode();
+        $this->db = null;
+      
+//        return $response->withJson($errresult);
+        return $response
+            ->withHeader('Content-Type', 'application/json')
+            ->write(json_encode($errresult,JSON_PRETTY_PRINT));
+
+    }
 	public function availableSlots($request, $response)
 	{
 		//$args = $request->getQueryParams();

@@ -5,6 +5,37 @@ namespace App\Controllers;
 class Promocodes extends Controller
 {
 
+
+    public function getPromoCodes($request, $response)
+    {
+       // $this->db->beginTransaction();
+        $sql = 'select * from promocodes';
+
+        $handle = $this->db->prepare($sql);
+        $result = $handle->execute();
+        $data = $handle->fetchAll();
+        $dataSend['Promolist'] = $data;
+        $errresult['Resultcode'] = static::$messages['Resultcode_0'];;
+
+        if($data) {
+            $errresult['Message'] = static::$messages['Data_true'];
+            $errresult['Data'] = $dataSend;
+        }
+        else {
+            $errresult['Message'] = static::$messages['Data_false'].' '.static::$messages['Check_Mobile'];
+            $errresult['Data'] = static::$messages['No_Data'];
+        }
+      
+        $errresult['StatusCode'] = $handle->errorCode();
+        $this->db = null;
+      
+    //    return $response->withJson($errresult);
+        return $response
+            ->withHeader('Content-Type', 'application/json')
+            ->write(json_encode($errresult,JSON_PRETTY_PRINT));
+
+    
+    }
     public function createPromocode($request, $response)
 	{
         $args = $request->getParsedBody();
@@ -27,6 +58,16 @@ class Promocodes extends Controller
         $date = strtotime($_REQUEST['Valid_to']);
         $to_date = date('Y-m-d',$date);
 
+        $today = date("Y-m-d");
+
+        if($from_date<=$today && $today<=$to_date ) 
+            $_REQUEST['Valid']='Y';        
+        else {
+            $_REQUEST['Valid']='N';
+            $this->logger->debug($from_date." is ahead of today ". $today);
+        }
+
+
     	$handle->bindValue(1, $_REQUEST['Name']);
         $handle->bindValue(2, $_REQUEST['Criteria']);
         $handle->bindValue(3, $_REQUEST['Discount']);
@@ -38,9 +79,11 @@ class Promocodes extends Controller
         $result = $handle->execute();
         $id = $this->db->lastInsertId();
 
-        $today = date("Y-m-d");
+       
     
-        if($_REQUEST['Valid']=='Y' && $from_date<=$today && $today<=$to_date ) {
+        //if($_REQUEST['Valid']=='Y' && $from_date<=$today && $today<=$to_date ) {
+        if($_REQUEST['Valid']=='Y') {
+
 
             if($_REQUEST['Criteria']=='All') {
 
