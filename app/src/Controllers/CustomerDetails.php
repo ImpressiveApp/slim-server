@@ -362,7 +362,7 @@ class CustomerDetails extends Controller
                 Account_Status = :status, Wallet =(Wallet + :Wallet) where 
                 Customer_Mobno = :Customer_Mobno ');
    
-            $handle->bindParam('status', ucfirst($args['status']));
+            $handle->bindParam('status', $args['status']);
             $handle->bindParam('Customer_Mobno', $args['mobno']);
             $handle->bindParam('Wallet', $args['wallet']);
 
@@ -607,7 +607,7 @@ class CustomerDetails extends Controller
 
             $errresult['Message'] = static::$messages['Data_true'];
 
-           $handle = $this->db->prepare('update Customer_Details set Account_Status =?,Wallet=? where Customer_Mobno=?');
+           $handle = $this->db->prepare('update customer_details set Account_Status =?,Wallet=? where Customer_Mobno=?');
    
             $handle->bindValue(1, $_REQUEST['Account_Status']);
             $handle->bindValue(2, $_REQUEST['Wallet']);

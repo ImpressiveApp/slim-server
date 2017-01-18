@@ -232,3 +232,7 @@
 [INFO] [Wed Jan 18 09:24:05 pm 2017] |200|0.095019 s|::1|POST http://localhost:7040/public/rest/setCustomerStatus/?mobno=34&status=&wallet=0
 [INFO] [Wed Jan 18 09:26:14 pm 2017] |URL|POST http://localhost:7040/public/rest/getPromoCodes/
 [INFO] [Wed Jan 18 09:26:14 pm 2017] |200|0.126025 s|::1|POST http://localhost:7040/public/rest/getPromoCodes/
+[INFO] [Wed Jan 18 11:48:05 pm 2017] |URL|POST http://localhost:7040/public/rest/setAccountStatus/?mobno=34&status=&wallet=
+[INFO] [Wed Jan 18 11:48:05 pm 2017] |200|-0.070000 s|::1|POST http://localhost:7040/public/rest/setAccountStatus/?mobno=34&status=&wallet=
+[INFO] [Wed Jan 18 11:48:15 pm 2017] |URL|POST http://localhost:7040/public/rest/setAccountStatus/?mobno=34&status=A&wallet=
+[INFO] [Wed Jan 18 11:48:15 pm 2017] |200|-0.734500 s|::1|POST http://localhost:7040/public/rest/setAccountStatus/?mobno=34&status=A&wallet=
