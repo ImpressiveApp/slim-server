@@ -436,20 +436,18 @@ class OrderDetails extends Controller
 
             $errresult['Message'] = static::$messages['Data_true'];
 
-             $arr = array_values($data);
-
+            $arr = array_values($data);
             $Applied_Promocode=$arr[0]['Applied_Promocode'];
 
-            $handle = $this->db->prepare('update order_details set Order_Status=?,No_Of_Items =? ,Address=?, Type_Of_Clothes =?, Cost =?, Before_Discount=?,Pickup_Slot =? ,Delivery_Slot=? where order_id=?');
- 
+            $order_handle = $this->db->prepare('update order_details set Order_Status=?,No_Of_Items =? ,Address=?, Type_Of_Clothes =?, Cost =?, Before_Discount=?,Pickup_Slot =? ,Delivery_Slot=? where order_id=?');
             $cost = $_REQUEST['Cost'];
-            $handle->bindValue(1, $_REQUEST['Order_Status']);
-            $handle->bindValue(2, $_REQUEST['No_Of_Items']);
-            $handle->bindValue(3, $_REQUEST['Address']);
-            $handle->bindValue(4, $_REQUEST['Types']);
+            $order_handle->bindValue(1, $_REQUEST['Order_Status']);
+            $order_handle->bindValue(2, $_REQUEST['No_Of_Items']);
+            $order_handle->bindValue(3, $_REQUEST['Address']);
+            $order_handle->bindValue(4, $_REQUEST['Types']);
 
             if($Applied_Promocode==NULL) {
-                $handle->bindValue(5, $_REQUEST['Cost']);                
+                $order_handle->bindValue(5, $_REQUEST['Cost']);                
             }
             else {
                 $handle4 = $this->db->prepare("select Discount from promocodes where Name=?");
@@ -460,44 +458,32 @@ class OrderDetails extends Controller
 
                 $discount=$arr4[0]['Discount'];
                 $cost= $_REQUEST['Cost'] -($_REQUEST['Cost']*$discount/100.0);
-                $handle->bindValue(5, $cost);
+                $order_handle->bindValue(5, $cost);
             }
 
-            $handle->bindValue(6, $_REQUEST['Cost']);
-            $handle->bindValue(7, $_REQUEST['Pickup_Slot']);
-            $handle->bindValue(8, $_REQUEST['Delivery_Slot']);
-            $handle->bindValue(9, $_REQUEST['Order_Id']);
-            $result = $handle->execute();
+            $order_handle->bindValue(6, $_REQUEST['Cost']);
+            $order_handle->bindValue(7, $_REQUEST['Pickup_Slot']);
+            $order_handle->bindValue(8, $_REQUEST['Delivery_Slot']);
+            $order_handle->bindValue(9, $_REQUEST['Order_Id']);
 
-            $handle = $this->db->prepare('Select * from order_details where order_id=?');
-            $handle->bindValue(1, $_REQUEST['Order_Id']);
-            $handle->execute();
-            $data = $handle->fetchAll();
+            // Order Update
+            $result = $order_handle->execute();
+          //  $count=$order_handle->rowCount();
    
             if($_REQUEST['Cost']>0&&($arr[0]['Before_Discount']!=$_REQUEST['Cost']))  {
        
-                $handle2 = $this->db->prepare("update customer_details set Wallet =(Wallet +?-?) where Customer_Mobno=?");
+                $handle1 = $this->db->prepare("update customer_details set Wallet =(Wallet +?-?) where Customer_Mobno=?");
 
-                $handle2->bindValue(1, $arr[0]['Cost']);
-                $handle2->bindValue(2, $cost);
-                $handle2->bindValue(3, $_REQUEST['Customer_Mobno']);
-                $result2 = $handle2->execute();
+                $handle1->bindValue(1, $arr[0]['Cost']);
+                $handle1->bindValue(2, $cost);
+                $handle1->bindValue(3, $_REQUEST['Customer_Mobno']);
 
+                // Wallet update in customer_details table
+                $result1 = $handle1->execute();
                 $comment = static::$messages['Amount_Rs'].$cost.' '.static::$messages['Amount_Debit'].$_REQUEST['Order_Id'].'.';
-            
-             /*   $handle4 = $this->db->prepare("insert into transactions (Customer_Mobno,Amount,Order_id,Comment) values (?,?,?,?)");
-
-                $handle4->bindValue(1, $_REQUEST['Customer_Mobno']);
-                $handle4->bindValue(2, $cost);
-                $handle4->bindValue(3, $_REQUEST['Order_Id']);
-                $handle4->bindValue(4, $comment);
-                $result4 = $handle4->execute();
-*/
-             //   static::$this->insertTransaction($_REQUEST['Customer_Mobno'],$cost,$_REQUEST['Order_Id'],$comment);
-
                 $this->insertTransaction($_REQUEST['Customer_Mobno'],$cost,$_REQUEST['Order_Id'],$comment);
-
                 $errresult['Message'] = $errresult['Message'].' '.$comment;
+
             }
 
             //update pickupslot
@@ -506,6 +492,19 @@ class OrderDetails extends Controller
                 $value =explode("_",$_REQUEST['Pickup_Slot']);
                 $pickup_slot=$value[0].'_'.$value[1];
                 $pickup_date = date('Y-m-d',strtotime($value[2]));
+
+                $valid_pickup=$this->getSlots($pickup_date,$pickup_slot);
+     
+                if( $valid_pickup==false) {
+                    $errresult['Resultcode'] = static::$messages['Resultcode_2'];
+                    $errresult['Message'] = $pickup_slot.' on '.$pickup_date.' '.static::$messages['Pickup_Slot_Unavailable'];
+                    $errresult['Data'] = static::$messages['No_Data'];
+                    $errresult['StatusCode'] = $entry_handle->errorCode();
+                    return $response
+                        ->withHeader('Content-Type', 'application/json')
+                        ->write(json_encode($errresult,JSON_PRETTY_PRINT));
+                }
+              
 
                 $handle2 = $this->db->prepare("update time_slots set ".$pickup_slot."=".$pickup_slot."-1 where Slot_Date=?");
 
@@ -531,6 +530,18 @@ class OrderDetails extends Controller
                 $delivery_slot=$value[0].'_'.$value[1];
                 $delivery_date = date('Y-m-d',strtotime($value[2]));
 
+                $valid_delivery=$this->getSlots($delivery_date,$delivery_slot);
+
+                if( $valid_delivery==false) {
+                    $errresult['Resultcode'] = static::$messages['Resultcode_2'];
+                    $errresult['Message'] = $delivery_slot.' on '.$delivery_date.' '.static::$messages['Delivery_Slot_Unavailable'];
+                    $errresult['Data'] = static::$messages['No_Data'];
+                    $errresult['StatusCode'] = $entry_handle->errorCode();
+                    return $response
+                        ->withHeader('Content-Type', 'application/json')
+                        ->write(json_encode($errresult,JSON_PRETTY_PRINT));
+                }
+
                 $handle3 = $this->db->prepare("update time_slots set ".$delivery_slot."=".$delivery_slot."-1 where Slot_Date=?");
                 $handle3->bindValue(1, $delivery_date);
                 $result3 = $handle3->execute();
@@ -546,6 +557,15 @@ class OrderDetails extends Controller
                 $this->insertTransaction($_REQUEST['Customer_Mobno'],0,$_REQUEST['Order_Id'],static::$messages['Delivery_Slot_Updated']);
                 $errresult['Message'] = $errresult['Message'].' '.static::$messages['Delivery_Slot_Updated'];
             }
+
+          
+
+
+
+            $handle = $this->db->prepare('Select * from order_details where order_id=?');
+            $handle->bindValue(1, $_REQUEST['Order_Id']);
+            $handle->execute();
+            $data = $handle->fetchAll();
 
             $errresult['Data'] = $data;
         }

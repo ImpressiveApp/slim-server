@@ -15,6 +15,7 @@ $app->post($pattern.'/getUser/','CustomerDetails:getUser');
 $app->post($pattern.'/getCustomerHistory/','CustomerDetails:getCustomerHistory');
 $app->post($pattern.'/updateCustomer/','CustomerDetails:updateCustomer');
 $app->post($pattern.'/setAccountStatus/','CustomerDetails:setAccountStatus');
+$app->post($pattern.'/setCustomerStatus/','CustomerDetails:setCustomerStatus');
 $app->post($pattern.'/setPassword/','CustomerDetails:setPassword');
 $app->post($pattern.'/getUnpaidCustomers/','CustomerDetails:getUnpaidCustomers');
 

@@ -1,0 +1,6 @@
+  "db" => [
+            "host" => "mysql.hostinger.in",
+            "dbname" => "u140705515_olddb",
+            "user" => "u140705515_root1",
+            "pass" => "12345678"
+        ]

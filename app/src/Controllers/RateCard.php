@@ -15,7 +15,7 @@ class RateCard extends Controller
         
      //   $this->logger->info("sms sent from rate");
      //  $this->testsms($number,$type,$data);
-        $this->sendNewSMS($number,$type,$data);
+    //    $this->sendNewSMS($number,$type,$data);
 
     /*    $errresult['ErrorCode']="000";
         $errresult["ErrorMessage"]= "Success";
@@ -37,6 +37,37 @@ class RateCard extends Controller
             ->withHeader('Content-Type', 'application/json')
             ->write(json_encode($errresult,JSON_PRETTY_PRINT));
       */  
+
+            $json = '
+{
+    "type": "donut",
+    "name": "Cake",
+    "toppings": [
+        { "id": "5002", "type": "Glazed" },
+        { "id": "5006", "type": "Chocolate with Sprinkles" },
+        { "id": "5004", "type": "Maple" }
+    ]
+}';
+
+$yummy = json_decode($json);
+
+//echo($yummy);
+
+$json = '
+{
+    "type": "donut",
+    "name": "Cake",
+    "toppings": [
+        { "id": "5002", "type": "Glazed" },
+        { "id": "5006", "type": "Chocolate with Sprinkles" },
+        { "id": "5004", "type": "Maple" }
+    ]
+}';
+
+$yummy = json_decode($json, true);
+
+var_dump( $yummy);
+//echo $yummy['toppings'][2]['type'];
     }
 	public function getRateCard($request, $response)
     {

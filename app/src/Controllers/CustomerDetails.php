@@ -598,7 +598,7 @@ class CustomerDetails extends Controller
         $handle1->bindValue(1, $_REQUEST['Customer_Mobno']);
         $handle1->execute();
 
-        $data = $handle1->fetchAll(PDO::FETCH_ASSOC);
+        $data = $handle1->fetchAll();
         $arr = array_values($data);
 
         $errresult['Resultcode'] = static::$messages['Resultcode_0'];;

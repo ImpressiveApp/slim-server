@@ -144,3 +144,91 @@
 [INFO] [Wed Jan 18 02:08:59 am 2017] |200|0.012003 s|::1|POST http://localhost:7050/public/rest/getSlots/?date=21-12-2016
 [INFO] [Wed Jan 18 02:09:33 am 2017] |URL|POST http://localhost:7050/public/rest/createOrder/?mobno=121&status=&address=&noOfItems=1&pickupSlot=Slot_7_21-12-2016&deliverySlot=Slot_8_21-12-2016&promocode=1&type=&isRefProcessed=
 [INFO] [Wed Jan 18 02:09:33 am 2017] |200|0.066514 s|::1|POST http://localhost:7050/public/rest/createOrder/?mobno=121&status=&address=&noOfItems=1&pickupSlot=Slot_7_21-12-2016&deliverySlot=Slot_8_21-12-2016&promocode=1&type=&isRefProcessed=
+[INFO] [Wed Jan 18 08:17:08 pm 2017] |URL|POST http://localhost:7040/public/rest/getSlots/?date=22-12-2016
+[INFO] [Wed Jan 18 08:17:08 pm 2017] |200|-0.195440 s|::1|POST http://localhost:7040/public/rest/getSlots/?date=22-12-2016
+[INFO] [Wed Jan 18 08:17:29 pm 2017] |URL|POST http://localhost:7040/public/rest/getSlots/?date=23-12-2016
+[INFO] [Wed Jan 18 08:17:29 pm 2017] |200|0.236547 s|::1|POST http://localhost:7040/public/rest/getSlots/?date=23-12-2016
+[INFO] [Wed Jan 18 08:17:35 pm 2017] |URL|POST http://localhost:7040/public/rest/getSlots/?date=24-12-2016
+[INFO] [Wed Jan 18 08:17:35 pm 2017] |200|0.143529 s|::1|POST http://localhost:7040/public/rest/getSlots/?date=24-12-2016
+[INFO] [Wed Jan 18 08:18:10 pm 2017] |URL|POST http://localhost:7040/public/rest/getSlots/?date=22-12-2016
+[INFO] [Wed Jan 18 08:18:10 pm 2017] |200|0.014503 s|::1|POST http://localhost:7040/public/rest/getSlots/?date=22-12-2016
+[INFO] [Wed Jan 18 08:18:50 pm 2017] |URL|POST http://localhost:7040/public/rest/createOrder/?mobno=121&status=&address=&noOfItems=1&pickupSlot=slot_1_22-12-2016&deliverySlot=slot_2_22-12-2016&promocode=&type=&isRefProcessed=
+[INFO] [Wed Jan 18 08:18:50 pm 2017] |200|0.537307 s|::1|POST http://localhost:7040/public/rest/createOrder/?mobno=121&status=&address=&noOfItems=1&pickupSlot=slot_1_22-12-2016&deliverySlot=slot_2_22-12-2016&promocode=&type=&isRefProcessed=
+[INFO] [Wed Jan 18 08:19:25 pm 2017] |URL|POST http://localhost:7040/public/rest/createOrder/?mobno=121&status=&address=&noOfItems=1&pickupSlot=Slot_1_22-12-2016&deliverySlot=Slot_2_22-12-2016&promocode=&type=&isRefProcessed=
+[INFO] [Wed Jan 18 08:19:25 pm 2017] |200|0.110622 s|::1|POST http://localhost:7040/public/rest/createOrder/?mobno=121&status=&address=&noOfItems=1&pickupSlot=Slot_1_22-12-2016&deliverySlot=Slot_2_22-12-2016&promocode=&type=&isRefProcessed=
+[INFO] [Wed Jan 18 08:19:46 pm 2017] |URL|POST http://localhost:7040/public/rest/getSlots/?date=22-12-2016
+[INFO] [Wed Jan 18 08:19:46 pm 2017] |200|0.015003 s|::1|POST http://localhost:7040/public/rest/getSlots/?date=22-12-2016
+[INFO] [Wed Jan 18 08:19:51 pm 2017] |URL|POST http://localhost:7040/public/rest/createOrder/?mobno=121&status=&address=&noOfItems=1&pickupSlot=Slot_1_22-12-2016&deliverySlot=Slot_2_22-12-2016&promocode=&type=&isRefProcessed=
+[INFO] [Wed Jan 18 08:19:51 pm 2017] |200|0.155531 s|::1|POST http://localhost:7040/public/rest/createOrder/?mobno=121&status=&address=&noOfItems=1&pickupSlot=Slot_1_22-12-2016&deliverySlot=Slot_2_22-12-2016&promocode=&type=&isRefProcessed=
+[INFO] [Wed Jan 18 08:19:55 pm 2017] |URL|POST http://localhost:7040/public/rest/getSlots/?date=22-12-2016
+[INFO] [Wed Jan 18 08:19:55 pm 2017] |200|0.014503 s|::1|POST http://localhost:7040/public/rest/getSlots/?date=22-12-2016
+[INFO] [Wed Jan 18 08:20:08 pm 2017] |URL|POST http://localhost:7040/public/rest/createOrder/?mobno=121&status=&address=&noOfItems=1&pickupSlot=Slot_3_22-12-2016&deliverySlot=Slot_4_22-12-2016&promocode=&type=&isRefProcessed=
+[INFO] [Wed Jan 18 08:20:08 pm 2017] |200|0.084517 s|::1|POST http://localhost:7040/public/rest/createOrder/?mobno=121&status=&address=&noOfItems=1&pickupSlot=Slot_3_22-12-2016&deliverySlot=Slot_4_22-12-2016&promocode=&type=&isRefProcessed=
+[INFO] [Wed Jan 18 08:25:38 pm 2017] |URL|POST http://localhost:7040/public/rest/updateOrder/?orderid=186&mobno=121&status=&address=&noOfItems=&pickupSlot=Slot_2_22-12-2016&deliverySlot=Slot_2_22-12-2016&cost=&type=
+[ERROR] [Wed Jan 18 08:25:38 pm 2017] SQLSTATE[HY000]: General error: 1366 Incorrect integer value: '' for column 'No_Of_Items' at row 1 | C:\xampp\htdocs\My PHP Projects\impressiveapplication\ImpressiveAppSlimServer\slim-server\app\src\Controllers\OrderDetails.php | line: 470
+[INFO] [Wed Jan 18 08:25:45 pm 2017] |URL|POST http://localhost:7040/public/rest/updateOrder/?orderid=186&mobno=121&status=&address=&noOfItems=2&pickupSlot=Slot_2_22-12-2016&deliverySlot=Slot_2_22-12-2016&cost=&type=
+[ERROR] [Wed Jan 18 08:25:45 pm 2017] SQLSTATE[HY000]: General error: 1366 Incorrect decimal value: '' for column 'Cost' at row 1 | C:\xampp\htdocs\My PHP Projects\impressiveapplication\ImpressiveAppSlimServer\slim-server\app\src\Controllers\OrderDetails.php | line: 470
+[INFO] [Wed Jan 18 08:25:53 pm 2017] |URL|POST http://localhost:7040/public/rest/updateOrder/?orderid=186&mobno=121&status=&address=&noOfItems=2&pickupSlot=Slot_2_22-12-2016&deliverySlot=Slot_2_22-12-2016&cost=0&type=
+[INFO] [Wed Jan 18 08:25:53 pm 2017] |200|0.166234 s|::1|POST http://localhost:7040/public/rest/updateOrder/?orderid=186&mobno=121&status=&address=&noOfItems=2&pickupSlot=Slot_2_22-12-2016&deliverySlot=Slot_2_22-12-2016&cost=0&type=
+[INFO] [Wed Jan 18 08:26:31 pm 2017] |URL|POST http://localhost:7040/public/rest/getSlots/?date=22-12-2016
+[INFO] [Wed Jan 18 08:26:31 pm 2017] |200|0.134527 s|::1|POST http://localhost:7040/public/rest/getSlots/?date=22-12-2016
+[INFO] [Wed Jan 18 08:27:01 pm 2017] |URL|POST http://localhost:7040/public/rest/updateOrder/?orderid=186&mobno=121&status=&address=&noOfItems=2&pickupSlot=Slot_3_22-12-2016&deliverySlot=Slot_4_22-12-2016&cost=0&type=
+[INFO] [Wed Jan 18 08:27:01 pm 2017] |200|-0.857271 s|::1|POST http://localhost:7040/public/rest/updateOrder/?orderid=186&mobno=121&status=&address=&noOfItems=2&pickupSlot=Slot_3_22-12-2016&deliverySlot=Slot_4_22-12-2016&cost=0&type=
+[INFO] [Wed Jan 18 08:27:08 pm 2017] |URL|POST http://localhost:7040/public/rest/getSlots/?date=22-12-2016
+[INFO] [Wed Jan 18 08:27:08 pm 2017] |200|0.019504 s|::1|POST http://localhost:7040/public/rest/getSlots/?date=22-12-2016
+[INFO] [Wed Jan 18 08:50:15 pm 2017] |URL|POST http://localhost:7040/public/rest/updateOrder/?orderid=186&mobno=121&status=&address=&noOfItems=3&pickupSlot=Slot_3_22-12-2016&deliverySlot=Slot_4_22-12-2016&cost=0&type=
+[INFO] [Wed Jan 18 08:50:15 pm 2017] |200|0.256500 s|::1|POST http://localhost:7040/public/rest/updateOrder/?orderid=186&mobno=121&status=&address=&noOfItems=3&pickupSlot=Slot_3_22-12-2016&deliverySlot=Slot_4_22-12-2016&cost=0&type=
+[INFO] [Wed Jan 18 08:51:50 pm 2017] |URL|POST http://localhost:7040/public/rest/updateOrder/?orderid=186&mobno=121&status=&address=&noOfItems=4&pickupSlot=Slot_1_22-12-2016&deliverySlot=Slot_2_22-12-2016&cost=0&type=
+[INFO] [Wed Jan 18 08:51:50 pm 2017] |200|0.148500 s|::1|POST http://localhost:7040/public/rest/updateOrder/?orderid=186&mobno=121&status=&address=&noOfItems=4&pickupSlot=Slot_1_22-12-2016&deliverySlot=Slot_2_22-12-2016&cost=0&type=
+[INFO] [Wed Jan 18 08:51:55 pm 2017] |URL|POST http://localhost:7040/public/rest/getSlots/?date=22-12-2016
+[INFO] [Wed Jan 18 08:51:55 pm 2017] |200|0.091500 s|::1|POST http://localhost:7040/public/rest/getSlots/?date=22-12-2016
+[INFO] [Wed Jan 18 08:52:30 pm 2017] |URL|POST http://localhost:7040/public/rest/updateOrder/?orderid=186&mobno=121&status=&address=&noOfItems=5&pickupSlot=Slot_5_22-12-2016&deliverySlot=Slot_6_22-12-2016&cost=0&type=
+[INFO] [Wed Jan 18 08:52:30 pm 2017] |200|-0.663500 s|::1|POST http://localhost:7040/public/rest/updateOrder/?orderid=186&mobno=121&status=&address=&noOfItems=5&pickupSlot=Slot_5_22-12-2016&deliverySlot=Slot_6_22-12-2016&cost=0&type=
+[INFO] [Wed Jan 18 08:53:28 pm 2017] |URL|POST http://localhost:7040/public/rest/updateOrder/?orderid=186&mobno=121&status=&address=&noOfItems=6&pickupSlot=Slot_1_22-12-2016&deliverySlot=Slot_6_22-12-2016&cost=0&type=
+[INFO] [Wed Jan 18 08:53:28 pm 2017] |200|0.095000 s|::1|POST http://localhost:7040/public/rest/updateOrder/?orderid=186&mobno=121&status=&address=&noOfItems=6&pickupSlot=Slot_1_22-12-2016&deliverySlot=Slot_6_22-12-2016&cost=0&type=
+[INFO] [Wed Jan 18 08:53:43 pm 2017] |URL|POST http://localhost:7040/public/rest/getSlots/?date=22-12-2016
+[INFO] [Wed Jan 18 08:53:43 pm 2017] |200|0.038000 s|::1|POST http://localhost:7040/public/rest/getSlots/?date=22-12-2016
+[INFO] [Wed Jan 18 08:53:59 pm 2017] |URL|POST http://localhost:7040/public/rest/updateOrder/?orderid=186&mobno=121&status=&address=&noOfItems=7&pickupSlot=Slot_1_22-12-2016&deliverySlot=Slot_2_22-12-2016&cost=0&type=
+[INFO] [Wed Jan 18 08:53:59 pm 2017] |200|0.044500 s|::1|POST http://localhost:7040/public/rest/updateOrder/?orderid=186&mobno=121&status=&address=&noOfItems=7&pickupSlot=Slot_1_22-12-2016&deliverySlot=Slot_2_22-12-2016&cost=0&type=
+[INFO] [Wed Jan 18 08:55:27 pm 2017] |URL|POST http://localhost:7040/public/rest/getSlots/?date=23-12-2016
+[INFO] [Wed Jan 18 08:55:27 pm 2017] |200|0.023005 s|::1|POST http://localhost:7040/public/rest/getSlots/?date=23-12-2016
+[INFO] [Wed Jan 18 08:55:58 pm 2017] |URL|POST http://localhost:7040/public/rest/updateOrder/?orderid=186&mobno=121&status=&address=&noOfItems=8&pickupSlot=Slot_1_23-12-2016&deliverySlot=Slot_2_23-12-2016&cost=0&type=
+[INFO] [Wed Jan 18 08:55:58 pm 2017] |200|0.084517 s|::1|POST http://localhost:7040/public/rest/updateOrder/?orderid=186&mobno=121&status=&address=&noOfItems=8&pickupSlot=Slot_1_23-12-2016&deliverySlot=Slot_2_23-12-2016&cost=0&type=
+[INFO] [Wed Jan 18 08:56:26 pm 2017] |URL|POST http://localhost:7040/public/rest/getSlots/?date=23-12-2016
+[INFO] [Wed Jan 18 08:56:26 pm 2017] |200|0.213543 s|::1|POST http://localhost:7040/public/rest/getSlots/?date=23-12-2016
+[INFO] [Wed Jan 18 08:56:39 pm 2017] |URL|POST http://localhost:7040/public/rest/getSlots/?date=22-12-2016
+[INFO] [Wed Jan 18 08:56:39 pm 2017] |200|0.013503 s|::1|POST http://localhost:7040/public/rest/getSlots/?date=22-12-2016
+[INFO] [Wed Jan 18 08:59:58 pm 2017] |URL|POST http://localhost:7040/public/rest/updateOrder/?orderid=186&mobno=121&status=&address=&noOfItems=8&pickupSlot=Slot_1_23-12-2016&deliverySlot=Slot_2_23-12-2016&cost=0&type=
+[INFO] [Wed Jan 18 08:59:58 pm 2017] |200|0.047510 s|::1|POST http://localhost:7040/public/rest/updateOrder/?orderid=186&mobno=121&status=&address=&noOfItems=8&pickupSlot=Slot_1_23-12-2016&deliverySlot=Slot_2_23-12-2016&cost=0&type=
+[INFO] [Wed Jan 18 09:00:11 pm 2017] |URL|POST http://localhost:7040/public/rest/updateOrder/?orderid=186&mobno=121&status=&address=&noOfItems=8&pickupSlot=Slot_1_23-12-2016&deliverySlot=Slot_2_23-12-2016&cost=10&type=
+[INFO] [Wed Jan 18 09:00:11 pm 2017] |200|0.115023 s|::1|POST http://localhost:7040/public/rest/updateOrder/?orderid=186&mobno=121&status=&address=&noOfItems=8&pickupSlot=Slot_1_23-12-2016&deliverySlot=Slot_2_23-12-2016&cost=10&type=
+[INFO] [Wed Jan 18 09:02:00 pm 2017] |URL|POST http://localhost:7040/public/rest/updateOrder/?orderid=186&mobno=121&status=&address=&noOfItems=8&pickupSlot=Slot_1_23-12-2016&deliverySlot=Slot_2_23-12-2016&cost=10&type=
+[INFO] [Wed Jan 18 09:02:00 pm 2017] |200|0.328566 s|::1|POST http://localhost:7040/public/rest/updateOrder/?orderid=186&mobno=121&status=&address=&noOfItems=8&pickupSlot=Slot_1_23-12-2016&deliverySlot=Slot_2_23-12-2016&cost=10&type=
+[INFO] [Wed Jan 18 09:05:17 pm 2017] |URL|GET http://localhost:7040/public/rest/sms/
+[INFO] [Wed Jan 18 09:05:17 pm 2017] |200|-0.113823 s|::1|GET http://localhost:7040/public/rest/sms/
+[INFO] [Wed Jan 18 09:05:40 pm 2017] |URL|GET http://localhost:7040/public/rest/sms/
+[INFO] [Wed Jan 18 09:10:00 pm 2017] |URL|GET http://localhost:7040/public/rest/sms/
+[INFO] [Wed Jan 18 09:10:06 pm 2017] |URL|GET http://localhost:7040/public/rest/sms/
+[INFO] [Wed Jan 18 09:10:06 pm 2017] |200|0.035508 s|::1|GET http://localhost:7040/public/rest/sms/
+[INFO] [Wed Jan 18 09:10:25 pm 2017] |URL|GET http://localhost:7040/public/rest/sms/
+[INFO] [Wed Jan 18 09:10:25 pm 2017] |200|0.036507 s|::1|GET http://localhost:7040/public/rest/sms/
+[INFO] [Wed Jan 18 09:10:35 pm 2017] |URL|GET http://localhost:7040/public/rest/sms/
+[INFO] [Wed Jan 18 09:10:49 pm 2017] |URL|GET http://localhost:7040/public/rest/sms/
+[INFO] [Wed Jan 18 09:10:49 pm 2017] |200|0.033507 s|::1|GET http://localhost:7040/public/rest/sms/
+[INFO] [Wed Jan 18 09:16:20 pm 2017] |URL|POST http://localhost:7040/public/rest/setAccountStatus/?mobno=121&status=
+[INFO] [Wed Jan 18 09:16:20 pm 2017] |200|0.354571 s|::1|POST http://localhost:7040/public/rest/setAccountStatus/?mobno=121&status=
+[INFO] [Wed Jan 18 09:21:51 pm 2017] |URL|POST http://localhost:7040/public/rest/setAccountStatus/?mobno=34&status=&wallet=
+[INFO] [Wed Jan 18 09:21:51 pm 2017] |200|0.201540 s|::1|POST http://localhost:7040/public/rest/setAccountStatus/?mobno=34&status=&wallet=
+[INFO] [Wed Jan 18 09:22:04 pm 2017] |URL|POST http://localhost:7040/public/setCustomerStatus/?mobno=34&status=&wallet=
+[ERROR] [Wed Jan 18 09:22:04 pm 2017] Page Not Found
+[INFO] [Wed Jan 18 09:22:04 pm 2017] |404|0.001501 s|::1|POST http://localhost:7040/public/setCustomerStatus/?mobno=34&status=&wallet=
+[INFO] [Wed Jan 18 09:22:26 pm 2017] |URL|POST http://localhost:7040/public/rest/setCustomerStatus/?mobno=34&status=&wallet=
+[ERROR] [Wed Jan 18 09:22:26 pm 2017] Page Not Found
+[INFO] [Wed Jan 18 09:22:26 pm 2017] |404|0.002000 s|::1|POST http://localhost:7040/public/rest/setCustomerStatus/?mobno=34&status=&wallet=
+[INFO] [Wed Jan 18 09:23:16 pm 2017] |URL|POST http://localhost:7040/public/rest/setCustomerStatus/?mobno=34&status=&wallet=
+[INFO] [Wed Jan 18 09:23:55 pm 2017] |URL|POST http://localhost:7040/public/rest/setCustomerStatus/?mobno=34&status=&wallet=
+[ERROR] [Wed Jan 18 09:23:55 pm 2017] SQLSTATE[HY000]: General error: 1366 Incorrect decimal value: '' for column 'Wallet' at row 50 | C:\xampp\htdocs\My PHP Projects\impressiveapplication\ImpressiveAppSlimServer\slim-server\app\src\Controllers\CustomerDetails.php | line: 621
+[INFO] [Wed Jan 18 09:24:05 pm 2017] |URL|POST http://localhost:7040/public/rest/setCustomerStatus/?mobno=34&status=&wallet=0
+[INFO] [Wed Jan 18 09:24:05 pm 2017] |200|0.095019 s|::1|POST http://localhost:7040/public/rest/setCustomerStatus/?mobno=34&status=&wallet=0
+[INFO] [Wed Jan 18 09:26:14 pm 2017] |URL|POST http://localhost:7040/public/rest/getPromoCodes/
+[INFO] [Wed Jan 18 09:26:14 pm 2017] |200|0.126025 s|::1|POST http://localhost:7040/public/rest/getPromoCodes/
