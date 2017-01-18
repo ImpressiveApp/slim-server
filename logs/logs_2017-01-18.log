@@ -17,7 +17,7 @@
 [INFO] [Wed Jan 18 12:20:08 am 2017] |200|0.027006 s|::1|POST http://localhost:7050/public/rest/createPromocode/?name=Test503&criteria=Order_0&discount=10&message=50000&validfrom=20-1-2017&validto=30-1-2017&valid=
 [INFO] [Wed Jan 18 12:31:25 am 2017] |URL|GET http://localhost:7050/public/rest/createInvalidPromocodes/
 [INFO] [Wed Jan 18 12:32:13 am 2017] |URL|GET http://localhost:7050/public/rest/createInvalidPromocodes/
-[INFO] [Wed Jan 18 12:32:13 am 2017] |200|0.014503 s|::1|GET http://localhost:7050/public/rest/createInvalidPromocodes/
+[INFO] [Wed Jan 18 12:32:13 am 2017] |200|0.014503 s|::1|GET http://localhost:7050/public/rest/createInvalidPromocodes/dasd
 [INFO] [Wed Jan 18 12:33:04 am 2017] |URL|GET http://localhost:7050/public/rest/createInvalidPromocodes/
 [INFO] [Wed Jan 18 12:33:04 am 2017] |200|0.049010 s|::1|GET http://localhost:7050/public/rest/createInvalidPromocodes/
 [INFO] [Wed Jan 18 12:39:52 am 2017] |URL|GET http://localhost:7050/public/rest/createInvalidPromocodes/
