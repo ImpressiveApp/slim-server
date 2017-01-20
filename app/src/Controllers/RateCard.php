@@ -10,11 +10,13 @@ class RateCard extends Controller
     public function sms($request, $response)
     {
         $number=9884873929;
-        $type=0;
-        $data="Arun Kumar2";
+        $type="Create_New_Customer_with_Referral_Code";
+        $sms_data=array("Deepak Prabakar","ZXY");
         
      //   $this->logger->info("sms sent from rate");
-     //  $this->testsms($number,$type,$data);
+//       $this->testsms($number,$type,$data);
+  $this->testsms($number,$type,$data);
+
     //    $this->sendNewSMS($number,$type,$data);
 
     /*    $errresult['ErrorCode']="000";

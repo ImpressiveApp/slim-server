@@ -196,6 +196,7 @@ class CustomerDetails extends Controller
         $handle->bindValue(10, 0);
         $handle->bindValue(12, $this->getReferralCode($_REQUEST['Customer_Mobno']));
 
+
         $result = $handle->execute();
         $id = $this->db->lastInsertId();
 
@@ -224,15 +225,26 @@ class CustomerDetails extends Controller
         $handle3->bindValue(1, $id);
         $result3 = $handle3->execute();
         $data= $handle3->fetchObject();
-
+//        $sms_arr = array_values($data);
+//$errresult['Resultco'] =$data->Id;
         $errresult['Resultcode'] = static::$messages['Resultcode_0'];;
         $errresult['Message'] = static::$messages['Data_true'].' '.static::$messages['Customer_Created'];
         $errresult['Data'] = $data;
         $errresult['StatusCode'] = $handle->errorCode();
-        $this->db->commit();
-        $this->db = null;
+        
+      
       
         //return $response->withJson($errresult);
+        $sms_number=$data->Customer_Mobno;
+        if($data->Referree_Code != null)
+            $sms_type="create_new_customer_with_referralcode"; 
+        else
+            $sms_type="create_new_customer";
+        $sms_data=array($data->Customer_Name,$data->Referree_Code);
+        $this->testsms($sms_number,$sms_type,$sms_data);
+      
+        $this->db->commit();
+        $this->db = null;
         return $response
             ->withHeader('Content-Type', 'application/json')
             ->write(json_encode($errresult,JSON_PRETTY_PRINT));

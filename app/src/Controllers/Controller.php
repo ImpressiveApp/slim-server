@@ -142,20 +142,29 @@ class Controller
     }
 
 
-    public function testsms($number,$type,$data)
+    public function testsms($number,$type,$sms_data)
     {
 
    //     Dear ##Field##, your password is ##Field##.
 
+
+//".$sms_data[1]."
+$template = array(
+    "create_new_customer" =>"Hi ".$sms_data[0].", Your Profile has been created successfully. Please login to place orders.",
+    "create_new_customer_with_referralcode" =>  "Hi ".$sms_data[0].", Thank you for using referral code ".$sms_data[1].". Your Profile has been created successfully. Please login to place orders.",
+"create_new_order" => "You Order has  been created successfully. Your Order Id is ".$sms_data[0].".",
+"create_new_order_with_promocode" => "You Order has  been created successfully. Promocode ".$sms_data[0]." applied. Your Order Id is ".$sms_data[1].".",
+
+);
        
 
-          $template = array(
+     /*     $template = array(
             "Dear ".$data.", your password is ".$data.".",
             "Template 2",
             "Template 3",
             "Template 4"
             );
-        $msg = $template[$type];
+     */   $msg = $template[$type];
         
 
         $output['ErrorCode']="000";
@@ -163,7 +172,7 @@ class Controller
         $output["JobId"]= "3860574";
         $output["MessageData"] =array(
                                     array(
-                                       "Number" => "919884873929",
+                                       "Number" => $number,
                                        "MessageParts" => array(
                                             array( 
                                                 "MsgId" => "919884873929-7625698446e649c5a19d463e7be0b981",
@@ -179,16 +188,17 @@ class Controller
                                     $output["MessageData"][0]["MessageParts"][0]["Text"]);
 
         if($output['ErrorCode']=="000")
-            $this->logger->info("sms sent successfully");
+            $this->logger->info("SMS sent successfully");
         else 
-            $this->logger->info("failed");
+            $this->logger->info("SMSfailed");
 
          // var_dump($output);
        /*     return $response
             ->withHeader('Content-Type', 'application/json')
             ->write(json_encode($output,JSON_PRETTY_PRINT));
        */     //return 
-            echo json_encode($output,JSON_PRETTY_PRINT);
+     //       echo json_encode($output,JSON_PRETTY_PRINT);
+            // i can echo
     
     }
 

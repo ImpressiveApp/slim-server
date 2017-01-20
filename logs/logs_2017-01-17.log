@@ -8,4 +8,4 @@
 [ERROR] [Tue Jan 17 01:37:06 am 2017] SQLSTATE[HY000] [2002] php_network_getaddresses: getaddrinfo failed: No such host is known.  | C:\xampp\htdocs\My PHP Projects\impressiveapplication\ImpressiveAppSlimServer\slim-server\app\dependencies.php | line: 34
 [INFO] [Tue Jan 17 01:37:20 am 2017] |URL|POST http://localhost:7040/public/rest/authentication/?mobno=&category=&password=
 [INFO] [Tue Jan 17 01:37:20 am 2017] |200|0.015002 s|::1|POST http://localhost:7040/public/rest/authentication/?mobno=&category=&password=
-asd
+asdsdas

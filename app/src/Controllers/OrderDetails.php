@@ -396,6 +396,21 @@ class OrderDetails extends Controller
         }
       
         $errresult['StatusCode'] = $entry_handle->errorCode();
+        
+        $sms_number=$data->Customer_Mobno;
+        if($data->Applied_Promocode != null) {
+            $sms_type="create_new_order_with_promocode"; 
+            $sms_data=array($data->Applied_Promocode,$data->Order_Id);
+        }
+        else {
+            $sms_type="create_new_order";
+            $sms_data=array($data->Order_Id,null);
+        
+        }
+
+        $this->testsms($sms_number,$sms_type,$sms_data);
+      
+
         $this->db->commit();
         $this->db = null;
       
