@@ -240,7 +240,7 @@ class CustomerDetails extends Controller
             $sms_type="create_new_customer_with_referralcode"; 
         else
             $sms_type="create_new_customer";
-        $sms_data=array($data->Customer_Name,$data->Referree_Code);
+        $sms_data=array($data->Customer_Name,$data->Referree_Code,null);
         $this->testsms($sms_number,$sms_type,$sms_data);
       
         $this->db->commit();
@@ -368,6 +368,7 @@ class CustomerDetails extends Controller
     
         $errresult['Resultcode'] = static::$messages['Resultcode_0'];;
 
+        $sms_type=null;
         if($data) {
 
             $handle = $this->db->prepare('update customer_details set   
@@ -380,12 +381,19 @@ class CustomerDetails extends Controller
 
             $errresult['Message'] = static::$messages['Data_true'];
 
-            if($args['status']!=$arr[0]['Account_Status'])
+            if($args['status']!=$arr[0]['Account_Status']) {
+                
                 $errresult['Message'] = $errresult['Message'].' '.static::$messages['Account_Status_Updated'];
+                $sms_type="change_account_status";    
+                $sms_data=array($args['status'],null,null);
+
+            }
 
             if($args['wallet'] > 0) {
                 $handle->bindParam('Wallet', $args['wallet']);
                 $errresult['Message'] = $errresult['Message'].' '.static::$messages['Wallet_Updated'];
+                $sms_type="wallet_updated_by_customer"; 
+                $sms_data=array($args['wallet'],null,null);                   
             }
             else {
                 $amount=0;
@@ -406,6 +414,11 @@ class CustomerDetails extends Controller
         }
       
         $errresult['StatusCode'] = $handle1->errorCode();
+
+        $sms_number=$data->Customer_Mobno;
+        
+        if($sms_type!=null)$this->testsms($sms_number,$sms_type,$sms_data);
+             
         $this->db->commit();
         $this->db = null;
       
@@ -615,6 +628,7 @@ class CustomerDetails extends Controller
 
         $errresult['Resultcode'] = static::$messages['Resultcode_0'];;
 
+        $sms_type=null;
         if($data) {
 
             $errresult['Message'] = static::$messages['Data_true'];
@@ -625,10 +639,19 @@ class CustomerDetails extends Controller
             $handle->bindValue(2, $_REQUEST['Wallet']);
             $handle->bindValue(3, $_REQUEST['Customer_Mobno']);
             
-            if($_REQUEST['Account_Status']!=$arr[0]['Account_Status'])
+            if($_REQUEST['Account_Status']!=$arr[0]['Account_Status']) {
                 $errresult['Message'] = $errresult['Message'].' '.static::$messages['Account_Status_Updated'];
-            if($_REQUEST['Wallet']!=$arr[0]['Wallet'])
+                $sms_type="change_account_status";   
+                $sms_data=array($args['status'],null,null); 
+             
+ 
+            }
+            if($_REQUEST['Wallet']!=$arr[0]['Wallet']) {
                 $errresult['Message'] = $errresult['Message'].' '.static::$messages['Wallet_Updated'];
+
+                $sms_type="wallet_updated_by_customer"; 
+                $sms_data=array($args['wallet'],null,null);                   
+            }
     
             $result = $handle->execute();
 
@@ -644,6 +667,10 @@ class CustomerDetails extends Controller
         }
       
         $errresult['StatusCode'] = $handle1->errorCode();
+
+        $sms_number=$data->Customer_Mobno;
+        if($sms_type!=null)$this->testsms($sms_number,$sms_type,$sms_data);
+        
         $this->db->commit();
         $this->db = null;
       

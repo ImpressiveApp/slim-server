@@ -152,8 +152,11 @@ class Controller
 $template = array(
     "create_new_customer" =>"Hi ".$sms_data[0].", Your Profile has been created successfully. Please login to place orders.",
     "create_new_customer_with_referralcode" =>  "Hi ".$sms_data[0].", Thank you for using referral code ".$sms_data[1].". Your Profile has been created successfully. Please login to place orders.",
-"create_new_order" => "You Order has  been created successfully. Your Order Id is ".$sms_data[0].".",
-"create_new_order_with_promocode" => "You Order has  been created successfully. Promocode ".$sms_data[0]." applied. Your Order Id is ".$sms_data[1].".",
+    "create_new_order" => "You Order has  been created successfully. Your Order Id is ".$sms_data[0].".",
+    "create_new_order_with_promocode" => "You Order has  been created successfully. Promocode ".$sms_data[0]." applied. Your Order Id is ".$sms_data[1].".",
+    "change_account_status" => "Your Profile status has been updated to ".$sms_data[0].".", 
+    "wallet_updated_by_admin" => "Cost of Order with Order Id: ".$sms_data[0]." is Rs. ".$sms_data[1].". Rs. ".$sms_data[2]." has been debited from your Wallet.",
+    "wallet_updated_by_customer" => "Thank you for making payment of Rs. ".$sms_data[0].". Your Wallet has been updated.",
 
 );
        

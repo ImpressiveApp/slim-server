@@ -400,11 +400,11 @@ class OrderDetails extends Controller
         $sms_number=$data->Customer_Mobno;
         if($data->Applied_Promocode != null) {
             $sms_type="create_new_order_with_promocode"; 
-            $sms_data=array($data->Applied_Promocode,$data->Order_Id);
+            $sms_data=array($data->Applied_Promocode,$data->Order_Id,null);
         }
         else {
             $sms_type="create_new_order";
-            $sms_data=array($data->Order_Id,null);
+            $sms_data=array($data->Order_Id,null,null);
         
         }
 
@@ -447,6 +447,7 @@ class OrderDetails extends Controller
 
         $errresult['Resultcode'] = static::$messages['Resultcode_0'];;
 
+        $sms_type=null;
         if($data) {
 
             $errresult['Message'] = static::$messages['Data_true'];
@@ -499,6 +500,7 @@ class OrderDetails extends Controller
                 $this->insertTransaction($_REQUEST['Customer_Mobno'],$cost,$_REQUEST['Order_Id'],$comment);
                 $errresult['Message'] = $errresult['Message'].' '.$comment;
 
+                $sms_type="wallet_updated_by_admin";     
             }
 
             //update pickupslot
@@ -580,7 +582,7 @@ class OrderDetails extends Controller
             $handle = $this->db->prepare('Select * from order_details where order_id=?');
             $handle->bindValue(1, $_REQUEST['Order_Id']);
             $handle->execute();
-            $data = $handle->fetchAll();
+            $data = $handle->fetchObject();
 
             $errresult['Data'] = $data;
         }
@@ -590,6 +592,11 @@ class OrderDetails extends Controller
         }
       
         $errresult['StatusCode'] = $entry_handle->errorCode();
+
+        $sms_number=$data->Customer_Mobno;
+        $sms_data=array($data->Order_Id,$data->Cost,$data->Cost);
+        if($sms_type!=null)$this->testsms($sms_number,$sms_type,$sms_data);
+
         $this->db->commit();
         $this->db = null;
       
