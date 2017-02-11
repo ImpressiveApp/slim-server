@@ -22,7 +22,7 @@ class Promocodes extends Controller
             $errresult['Data'] = $dataSend;
         }
         else {
-            $errresult['Message'] = static::$messages['Data_false'].' '.static::$messages['Check_Mobile'];
+            $errresult['Message'] = static::$messages['Data_false'];
             $errresult['Data'] = static::$messages['No_Data'];
         }
       

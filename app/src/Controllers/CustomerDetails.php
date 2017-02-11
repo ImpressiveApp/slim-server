@@ -22,7 +22,7 @@ class CustomerDetails extends Controller
             $errresult['Data'] = $dataSend;
         }
         else {
-            $errresult['Message'] = static::$messages['Data_false'].' '.static::$messages['Check_Mobile'];
+            $errresult['Message'] = static::$messages['Data_false'];
             $errresult['Data'] = static::$messages['No_Data'];
         }
       
@@ -61,70 +61,74 @@ class CustomerDetails extends Controller
             $errresult['Message'] = static::$messages['Data_true'];
             $Password_Authentication=password_verify($_REQUEST['Customer_Password'],$arr[0]['Customer_Password']);
 
+            $Admin_Authentication=false;
             if($_REQUEST['Category']==static::$messages['Admin']) {
                 if($arr[0]['isAdmin']==1)
                     $Admin_Authentication=true;
-                else
-                    $Admin_Authentication=false;
             }
 
             else if($_REQUEST['Category']==static::$messages['Customer']) {
-                if($arr[0]['isAdmin']==1)
-                    $Admin_Authentication=false;
-                else
+                if($arr[0]['isAdmin']==0)
                     $Admin_Authentication=true;
             }
             
             
-            if(($_REQUEST['Category']==static::$messages['Admin'] || $_REQUEST['Category']==static::$messages['Customer']) && $Admin_Authentication)
+            if($Admin_Authentication)
             {
-                if($Password_Authentication &&$arr[0]['Account_Status']==static::$messages['Active'])
-                    $authenticated=true;
-                else
-                    $authenticated=false;
+                $status_authentication=false;
+                if($arr[0]['Account_Status']==static::$messages['Active'])
+                $status_authentication=true;
 
-                if($authenticated) {
+                if($status_authentication)
+                {
+                    if($Password_Authentication) {
 
-                    $promoNames=explode(" ",trim($arr[0]['Applicable_Promocodes']));
-                
-                    foreach( $promoNames as $name ) {
-             
-                        $handle1 = $this->db->prepare('Select Name, Message from promocodes where Name in (?)');
-                        $handle1->bindValue(1, $name);
+                        $promoNames=preg_split("/[\s]+/",trim($arr[0]['Applicable_Promocodes']));
+                        
+                        foreach( $promoNames as $name ) {
+                 
+                            $handle1 = $this->db->prepare('Select Name, Message from promocodes where Name in (?)');
+                            $handle1->bindValue(1, $name);
 
-                        $result1 = $handle1->execute();
-                        $data1 = $handle1->fetchAll();
-                        $arr1 = array_values($data1);
-                        $applicable_promocodes[$name]=$arr1[0]['Message'];
+                            $result1 = $handle1->execute();
+                            $data1 = $handle1->fetchAll();
+                            $arr1 = array_values($data1);
+                            $applicable_promocodes[$name]=$arr1[0]['Message'];
+                        }
+           
+                        $auth = array
+                            (
+                                "Customer_Mobno"=>$arr[0]['Customer_Mobno'],
+                                "EmailId"=>$arr[0]['Customer_Emailid'],
+                                "Customer_Name"=>$arr[0]['Customer_Name'],
+                                "Customer_AddressDetails"=>$arr[0]['Customer_AddressDetails'],
+                                "Wallet"=>$arr[0]['Wallet'],
+                                "Account_Status"=>$arr[0]['Account_Status'],
+                                "Applicable_Promocodes"=>$applicable_promocodes,
+                                "Referral_Code"=>$arr[0]['Referral_Code'],
+                                "isRefProcessed"=>$arr[0]['isRefProcessed'],
+                                "Authenticated"=>$Password_Authentication
+                            );
+                 
+                        $errresult['Data']=$auth;
                     }
-       
-                    $auth = array
-                        (
-                            "Customer_Mobno"=>$arr[0]['Customer_Mobno'],
-                            "EmailId"=>$arr[0]['Customer_Emailid'],
-                            "Customer_Name"=>$arr[0]['Customer_Name'],
-                            "Customer_AddressDetails"=>$arr[0]['Customer_AddressDetails'],
-                            "Wallet"=>$arr[0]['Wallet'],
-                            "Account_Status"=>$arr[0]['Account_Status'],
-                            "Applicable_Promocodes"=>$applicable_promocodes,
-                            "Referral_Code"=>$arr[0]['Referral_Code'],
-                            "isRefProcessed"=>$arr[0]['isRefProcessed'],
-                            "Authenticated"=>$authenticated
-                        );
-             
-                    $errresult['Data']=$auth;
+                    else {
+                                $errresult['Message'] = static::$messages['Check_Password'];
+                            $errresult['Data'] = static::$messages['No_Data'];
+                        }
+                     
                 }
                 else {
-                    $errresult['Message'] = static::$messages['Check_Password'];
+                    $errresult['Message'] = static::$messages['Account_Status_Not_Active'];
                     $errresult['Data'] = static::$messages['No_Data'];
                 }
-             
+                     
             }
 
             else {
                 $errresult['Message'] = static::$messages['Check_Category'];
                 $errresult['Data'] = static::$messages['No_Data'];
-                $errresult['Data1'] = array(array());
+         //       $errresult['Data1'] = array(array());
 
             }
             

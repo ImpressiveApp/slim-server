@@ -75,6 +75,8 @@ var_dump( $yummy);
     {
        // $this->db->beginTransaction();
         $sql = 'select * from ratecard';
+     
+
 
         $handle = $this->db->prepare($sql);
         $result = $handle->execute();
@@ -87,7 +89,7 @@ var_dump( $yummy);
             $errresult['Data'] = $dataSend;
         }
         else {
-            $errresult['Message'] = static::$messages['Data_false'].' '.static::$messages['Check_Mobile'];
+            $errresult['Message'] = static::$messages['Data_false'];
             $errresult['Data'] = static::$messages['No_Data'];
         }
       

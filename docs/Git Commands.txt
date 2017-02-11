@@ -1,0 +1,6 @@
+git status
+
+git add .
+
+$ git commit -m "2017-1-20 - changes"
+
