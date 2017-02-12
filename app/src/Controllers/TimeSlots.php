@@ -65,7 +65,7 @@ class TimeSlots extends Controller
         $dates= array();
         foreach( $data as $next_dates ) {
 
-            $handle = $this->db->prepare('SELECT REPLACE(SUBSTR(SLOT,1,6),"Slot","Booked") as Slot,
+            $handle = $this->db->prepare('SELECT REPLACE(SUBSTR(SLOT,1,LENGTH(SLOT)-11),"Slot","Booked") as Slot,
                 SUBSTR(SLOT,1,6),SLOT, SUM(COUNT) as Count FROM
                 (
                     SELECT Pickup_Slot AS SLOT, COUNT(Order_Id) AS COUNT 
