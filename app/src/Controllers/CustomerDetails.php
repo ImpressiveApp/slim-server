@@ -22,6 +22,7 @@ class CustomerDetails extends Controller
             $errresult['Data'] = $dataSend;
         }
         else {
+            $errresult['Resultcode'] = static::$messages['Resultcode_1'];
             $errresult['Message'] = static::$messages['Data_false'];
             $errresult['Data'] = static::$messages['No_Data'];
         }
@@ -42,7 +43,7 @@ class CustomerDetails extends Controller
         
         $this->db->beginTransaction();
         
-        $handle = $this->db->prepare('Select Customer_Mobno, Customer_AddressDetails, Customer_Emailid,Customer_Name,Customer_Password, Wallet,isAdmin,Account_Status,Applicable_Promocodes, Referral_Code, isRefProcessed from customer_details where Customer_Mobno = ?');
+        $handle = $this->db->prepare('Select Customer_Mobno, Customer_AddressDetails, Address_Line1, Address_Line2, Area, City, State, Pincode, Customer_Emailid,Customer_Name,Customer_Password, Wallet,isAdmin,Account_Status,Applicable_Promocodes, Referral_Code, isRefProcessed from customer_details where Customer_Mobno = ?');
            
         $_REQUEST['Customer_Mobno']=$args['mobno'];
         $_REQUEST['Customer_Password']=$args['password'];
@@ -54,7 +55,7 @@ class CustomerDetails extends Controller
         $data = $handle->fetchAll();
         $arr = array_values($data);         
 
-        $errresult['Resultcode'] = static::$messages['Resultcode_0'];;
+        $errresult['Resultcode'] = static::$messages['Resultcode_0'];
 
         if($data) {
 
@@ -102,6 +103,12 @@ class CustomerDetails extends Controller
                                 "EmailId"=>$arr[0]['Customer_Emailid'],
                                 "Customer_Name"=>$arr[0]['Customer_Name'],
                                 "Customer_AddressDetails"=>$arr[0]['Customer_AddressDetails'],
+                                "Address_Line1"=>$arr[0]['Address_Line1'],
+                                "address_Line2"=>$arr[0]['Address_Line2'],
+                                "Area"=>$arr[0]['Area'],
+                                "State"=>$arr[0]['State'],
+                                "City"=>$arr[0]['City'],
+                                "Pincode"=>$arr[0]['Pincode'],
                                 "Wallet"=>$arr[0]['Wallet'],
                                 "Account_Status"=>$arr[0]['Account_Status'],
                                 "Applicable_Promocodes"=>$applicable_promocodes,
@@ -113,12 +120,14 @@ class CustomerDetails extends Controller
                         $errresult['Data']=$auth;
                     }
                     else {
-                                $errresult['Message'] = static::$messages['Check_Password'];
+                            $errresult['Resultcode'] = static::$messages['Resultcode_1'];
+                            $errresult['Message'] = static::$messages['Check_Password'];
                             $errresult['Data'] = static::$messages['No_Data'];
                         }
                      
                 }
                 else {
+                    $errresult['Resultcode'] = static::$messages['Resultcode_1'];
                     $errresult['Message'] = static::$messages['Account_Status_Not_Active'];
                     $errresult['Data'] = static::$messages['No_Data'];
                 }
@@ -126,6 +135,7 @@ class CustomerDetails extends Controller
             }
 
             else {
+                $errresult['Resultcode'] = static::$messages['Resultcode_1'];
                 $errresult['Message'] = static::$messages['Check_Category'];
                 $errresult['Data'] = static::$messages['No_Data'];
          //       $errresult['Data1'] = array(array());
@@ -134,7 +144,7 @@ class CustomerDetails extends Controller
             
          }
         else {
-            
+            $errresult['Resultcode'] = static::$messages['Resultcode_1'];            
             $errresult['Message'] = static::$messages['Data_false'].' '.static::$messages['Check_Mobile'];
             $errresult['Data'] = static::$messages['No_Data'];
         }
@@ -161,13 +171,20 @@ class CustomerDetails extends Controller
         
         $this->db->beginTransaction();
 
-        $handle = $this->db->prepare('insert into customer_details(Customer_Name,Customer_Mobno,Customer_Emailid,Customer_AddressDetails,Customer_GPSLan,Customer_GPSLon,Customer_Password,isAdmin,Account_Status,Wallet,Referree_Code,Referral_Code,isRefProcessed) values(?,?,?,?,?,?,?,?,?,?,?,?,?)');
+        $handle = $this->db->prepare('insert into customer_details(Customer_Name,Customer_Mobno,Customer_Emailid,Customer_AddressDetails,Address_line1,Address_line2, Area, City, State, Pincode,Customer_GPSLan,Customer_GPSLon,Customer_Password,isAdmin,Account_Status,Wallet,Referree_Code,Referral_Code,isRefProcessed) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)');
     
         $_REQUEST['Category']=ucfirst($args['category']);
         $_REQUEST['Customer_Name']=ucwords($args['name']);
         $_REQUEST['Customer_Mobno']=$args['mobno'];
         $_REQUEST['Customer_Emailid']=$args['emailid'];
         $_REQUEST['Customer_AddressDetails']=$args['address'];
+        $_REQUEST['Address_line1']=$args['address_line1'];
+        $_REQUEST['Address_line2']=$args['address_line2'];
+        $_REQUEST['Area']=$args['area'];
+        $_REQUEST['City']=$args['city'];
+        $_REQUEST['State']=$args['state'];
+        $_REQUEST['Pincode']=$args['pincode'];
+
         $_REQUEST['Customer_GPSLan']=$args['lat'];
         $_REQUEST['Customer_GPSLon']=$args['lon'];
         $_REQUEST['Customer_Password']=$args['password'];
@@ -179,26 +196,35 @@ class CustomerDetails extends Controller
         $handle->bindValue(2, $_REQUEST['Customer_Mobno']);
         $handle->bindValue(3, $_REQUEST['Customer_Emailid']);
         $handle->bindValue(4, $_REQUEST['Customer_AddressDetails']);
-        $handle->bindValue(5, $_REQUEST['Customer_GPSLan']);
-        $handle->bindValue(6, $_REQUEST['Customer_GPSLon']);
-        $handle->bindValue(7, password_hash($_REQUEST['Customer_Password'], PASSWORD_DEFAULT));
+        $handle->bindValue(5, $_REQUEST['Address_line1']);
+        $handle->bindValue(6, $_REQUEST['Address_line2']);
+        $handle->bindValue(7, $_REQUEST['Area']);
+        $handle->bindValue(8, $_REQUEST['City']);
+        $handle->bindValue(9, $_REQUEST['State']);
+        $handle->bindValue(10, $_REQUEST['Pincode']);
+
+
+
+        $handle->bindValue(11, $_REQUEST['Customer_GPSLan']);
+        $handle->bindValue(12, $_REQUEST['Customer_GPSLon']);
+        $handle->bindValue(13, password_hash($_REQUEST['Customer_Password'], PASSWORD_DEFAULT));
 
         if($_REQUEST['Category']==static::$messages['Admin']) {
             $_REQUEST['Account_Status']=static::$messages['Active'];
-            $handle->bindValue(8, 1);
-            $handle->bindValue(11, 'NOTAPPLY');
-            $handle->bindValue(13, 'U');
+            $handle->bindValue(14, 1);
+            $handle->bindValue(17, 'NOTAPPLY');
+            $handle->bindValue(19, 'U');
         }
         else if($_REQUEST['Category']==static::$messages['Customer']) {
             $_REQUEST['Account_Status']=static::$messages['Waiting_For_Verification'];    
-            $handle->bindValue(8, 0);
-            $handle->bindValue(11, $_REQUEST['Referree_Code']);
-            $handle->bindValue(13, $_REQUEST['isRefProcessed']);
+            $handle->bindValue(14, 0);
+            $handle->bindValue(17, $_REQUEST['Referree_Code']);
+            $handle->bindValue(19, $_REQUEST['isRefProcessed']);
         }
 
-        $handle->bindValue(9, $_REQUEST['Account_Status']);
-        $handle->bindValue(10, 0);
-        $handle->bindValue(12, $this->getReferralCode($_REQUEST['Customer_Mobno']));
+        $handle->bindValue(15, $_REQUEST['Account_Status']);
+        $handle->bindValue(16, 0);
+        $handle->bindValue(18, $this->getReferralCode($_REQUEST['Customer_Mobno']));
 
 
         $result = $handle->execute();
@@ -279,6 +305,7 @@ class CustomerDetails extends Controller
             $errresult['Data'] = $dataSend;
         }
         else {
+            $errresult['Resultcode'] = static::$messages['Resultcode_1'];
             $errresult['Message'] = static::$messages['Data_false'].' '.static::$messages['Check_Mobile'];
             $errresult['Data'] = static::$messages['No_Data'];
         }
@@ -313,7 +340,7 @@ class CustomerDetails extends Controller
             $errresult['Data'] = $data;
         }
         else {
-           
+            $errresult['Resultcode'] = static::$messages['Resultcode_1'];
             $errresult['Message'] = static::$messages['Data_false'].' '.static::$messages['Check_Mobile'];
             $errresult['Data'] = static::$messages['No_Data'];
         }
@@ -327,11 +354,15 @@ class CustomerDetails extends Controller
     public function getVerificationAccounts($request, $response)
     {  
         $handle = $this->db->prepare('Select * from customer_details where
-            Account_Status= :status');
+            Account_Status in (:status1,:status2) order by Account_Status' );
    
-        $status='Waiting For Verification';
+        $status1 = static::$messages['Waiting_For_Verification'];
+        $status2 = static::$messages['ReVerification'];
+
   
-        $handle->bindParam('status', $status);
+        $handle->bindParam('status1', $status1);
+        $handle->bindParam('status2', $status2);
+
         $result = $handle->execute();
     
         $data = $handle->fetchAll();
@@ -343,6 +374,7 @@ class CustomerDetails extends Controller
             $errresult['Data'] = $dataSend;
         }
         else {
+            $errresult['Resultcode'] = static::$messages['Resultcode_1'];
             $errresult['Message'] = static::$messages['Data_false'];
             $errresult['Data'] = static::$messages['No_Data'];
         }
@@ -412,7 +444,7 @@ class CustomerDetails extends Controller
             $errresult['Data'] = $data;
         }
         else {
-           
+            $errresult['Resultcode'] = static::$messages['Resultcode_1'];
             $errresult['Message'] = static::$messages['Data_false'].' '.static::$messages['Check_Mobile'];
             $errresult['Data'] = static::$messages['No_Data'];
         }
@@ -464,7 +496,7 @@ class CustomerDetails extends Controller
             $errresult['Data'] = $data;
         }
         else {
-           
+            $errresult['Resultcode'] = static::$messages['Resultcode_1'];
             $errresult['Message'] = static::$messages['Data_false'].' '.static::$messages['Check_Mobile'];
             $errresult['Data'] = static::$messages['No_Data'];
         }
@@ -488,13 +520,21 @@ class CustomerDetails extends Controller
         $_REQUEST['New_Mobno']=$args['newmobno'];
         $_REQUEST['Customer_Emailid']=$args['emailid'];
         $_REQUEST['Customer_AddressDetails']=$args['address'];
+
+        $_REQUEST['Address_Line1']=$args['address_line1'];
+        $_REQUEST['Address_Line2']=$args['address_line2'];
+        $_REQUEST['Area']=$args['area'];
+        $_REQUEST['City']=$args['city'];
+        $_REQUEST['State']=$args['state'];
+        $_REQUEST['Pincode']=$args['pincode'];
+
         $_REQUEST['Customer_GPSLan']=$args['lat'];
         $_REQUEST['Customer_GPSLon']=$args['lon'];
         $_REQUEST['Customer_Password']=$args['oldpassword'];
         $_REQUEST['New_Password']=$args['newpassword'];
         $_REQUEST['Wallet']=$args['wallet'];
 
-        $handle1 = $this->db->prepare('Select Id,Customer_Password from customer_details where Customer_Mobno=?');
+        $handle1 = $this->db->prepare('Select * from customer_details where Customer_Mobno=?');
         $handle1->bindValue(1, $_REQUEST['Customer_Mobno']);
         $result1= $handle1->execute();
     
@@ -513,40 +553,71 @@ class CustomerDetails extends Controller
                 
                 $errresult['Message'] = static::$messages['Data_true'];
                 
-                $handle = $this->db->prepare('update customer_details set Customer_Name = ?,Customer_Emailid = ?,Customer_AddressDetails = ?,Customer_GPSLan = ?,Customer_GPSLon = ?,isAdmin= ?,Account_Status = ? ,Customer_Password=?, Wallet=(Wallet+?), Customer_Mobno=? where Id = ?');
+                $handle = $this->db->prepare('update customer_details set Customer_Name = ?,Customer_Emailid = ?,Customer_AddressDetails = ?, Address_line1 = ?, Address_line2 = ?, Area = ?, City = ?, State = ?, Pincode = ?,Customer_GPSLan = ?,Customer_GPSLon = ?,isAdmin= ?,Account_Status = ? ,Customer_Password=?, Wallet=(Wallet+?), Customer_Mobno=? where Id = ?');
       
                 $handle->bindValue(1, $_REQUEST['Customer_Name']);
                 $handle->bindValue(2, $_REQUEST['Customer_Emailid']);
                 $handle->bindValue(3, $_REQUEST['Customer_AddressDetails']);
-                $handle->bindValue(4, $_REQUEST['Customer_GPSLan']);
-                $handle->bindValue(5, $_REQUEST['Customer_GPSLon']);
+            //    $handle->bindValue(4, $_REQUEST['Address_line1']);
+            //    $handle->bindValue(5, $_REQUEST['Address_line2']);
+           //     $handle->bindValue(6, $_REQUEST['Area']);
+            //    $handle->bindValue(7, $_REQUEST['City']);
+            //    $handle->bindValue(8, $_REQUEST['State']);
+            //    $handle->bindValue(9, $_REQUEST['Pincode']);
 
-                if($_REQUEST['Category']=="admin") {
-                    $_REQUEST['Account_Status']="Active";
-                    $handle->bindValue(6, 1);
-                }
-                else if($_REQUEST['Category']=='customer') {
-                    $_REQUEST['Account_Status']="Waiting For Verification";    
-                    $handle->bindValue(6, 0);
+
+                $handle->bindValue(10, $_REQUEST['Customer_GPSLan']);
+                $handle->bindValue(11, $_REQUEST['Customer_GPSLon']);
+
+                $_REQUEST['Account_Status']=$arr[0]['Account_Status'];
+                if($_REQUEST['Category']=="admin")                  
+                    $handle->bindValue(12, 1);
+                
+                else if($_REQUEST['Category']=='customer') 
+                    $handle->bindValue(12, 0);
+                
+                $address = array(
+                    "Address_Line1" => 4,
+                    "Address_Line2" => 5,
+                    "Area" => 6,
+                    "City" => 7,
+                    "State" => 8,
+                    "Pincode" => 9
+                );
+
+                $isAddressUpdated=0;
+                foreach ($address as $key => $value) {
+                    
+                    if($_REQUEST[$key]==null||$_REQUEST[$key]==$arr[0][$key]) 
+                       $handle->bindValue($value, $arr[0][$key]);
+                        
+                    else {
+                        $handle->bindValue($value, $_REQUEST[$key]);
+                        $isAddressUpdated=1;
+                        $_REQUEST['Account_Status']=static::$messages['ReVerification'];
+                    }
+
                 }
 
-                $handle->bindValue(7, $_REQUEST['Account_Status']);
-                $handle->bindValue(11, $id);
+                if($isAddressUpdated==1)
+                    $errresult['Message'] = $errresult['Message'].' '.static::$messages['Address_Updated'].' '.static::$messages['Admin_ReVerify'];
+                   
+                $handle->bindValue(17, $id);
 
                 //updating Password      
                 if($_REQUEST['New_Password']==null||$_REQUEST['New_Password']==$_REQUEST['Customer_Password']) {
                 
-                       $handle->bindValue(8, password_hash($_REQUEST['Customer_Password'], PASSWORD_DEFAULT));
+                       $handle->bindValue(14, password_hash($_REQUEST['Customer_Password'], PASSWORD_DEFAULT));
                 }
                 else {
-                    $handle->bindValue(8, password_hash($_REQUEST['New_Password'], PASSWORD_DEFAULT));
+                    $handle->bindValue(14, password_hash($_REQUEST['New_Password'], PASSWORD_DEFAULT));
 
                     $errresult['Message'] = $errresult['Message'].' '.static::$messages['Password_Updated'];
                 }
 
                 //updating wallet
                 if($_REQUEST['Wallet']>0) {
-                    $handle->bindValue(9, $_REQUEST['Wallet']);
+                    $handle->bindValue(15, $_REQUEST['Wallet']);
 
                     $errresult['Message'] = $errresult['Message'].' '.static::$messages['Wallet_Updated'];
 
@@ -560,16 +631,16 @@ class CustomerDetails extends Controller
 
                 }
                 else {
-                    $handle->bindValue(9, 0);
+                    $handle->bindValue(15, 0);
                 }
 
                 //update customer mobno
                 if($_REQUEST['New_Mobno']==null||$_REQUEST['New_Mobno']==$_REQUEST['Customer_Mobno']) {
-                    $handle->bindValue(10, $_REQUEST['Customer_Mobno']);
+                    $handle->bindValue(16, $_REQUEST['Customer_Mobno']);
                 }
                 else {
 
-                    $handle->bindValue(10, $_REQUEST['New_Mobno']);
+                    $handle->bindValue(16, $_REQUEST['New_Mobno']);
 
                     $handle2 = $this->db->prepare("update order_details set Customer_Mobno=? where Customer_Mobno=?");
                     $handle2->bindValue(1, $_REQUEST['New_Mobno']);
@@ -580,10 +651,11 @@ class CustomerDetails extends Controller
                     $handle2->bindValue(1, $_REQUEST['New_Mobno']);
                     $handle2->bindValue(2, $_REQUEST['Customer_Mobno']);
                     $result2 = $handle2->execute();
-                    
-                    $errresult['Message'] = $errresult['Message'].' '.static::$messages['Mobile_Updated'];
-                }
+                    $_REQUEST['Account_Status']=static::$messages['ReVerification'];
+                    $errresult['Message'] = $errresult['Message'].' '.static::$messages['Mobile_Updated'].' '.static::$messages['Admin_ReVerify'];
 
+                }
+                $handle->bindValue(13, $_REQUEST['Account_Status']);
                 $result = $handle->execute();
            
                 $handle2 = $this->db->prepare('Select * from customer_details where Id=?');
@@ -595,12 +667,14 @@ class CustomerDetails extends Controller
             }
            
             else {
+                $errresult['Resultcode'] = static::$messages['Resultcode_1'];
                 $errresult['Message'] = static::$messages['Check_Password'];
                 $errresult['Data'] = static::$messages['No_Data'];
             }
 
         }
-        else {           
+        else {          
+            $errresult['Resultcode'] = static::$messages['Resultcode_1']; 
             $errresult['Message'] = static::$messages['Data_false'].' '.static::$messages['Check_Mobile'];
             $errresult['Data'] = static::$messages['No_Data'];
         }
@@ -609,7 +683,10 @@ class CustomerDetails extends Controller
         $this->db->commit();
         $this->db = null;
 
-        return $response->withJson($errresult);
+        //return $response->withJson($errresult);
+        return $response
+            ->withHeader('Content-Type', 'application/json')
+            ->write(json_encode($errresult,JSON_PRETTY_PRINT));
     }
 
     public function setCustomerStatus($request, $response)
@@ -665,7 +742,7 @@ class CustomerDetails extends Controller
             $errresult['Data'] = $data;
         }
         else {
-           
+            $errresult['Resultcode'] = static::$messages['Resultcode_1'];
             $errresult['Message'] = static::$messages['Data_false'].' '.static::$messages['Check_Mobile'];
             $errresult['Data'] = static::$messages['No_Data'];
         }

@@ -2,11 +2,37 @@
 
 namespace App\Controllers;
 
-
-
 class RateCard extends Controller
 {
+    public function readProperties($request, $response)
+    {
+        define('BIRD', 'Dodo bird');
+        echo "hi";
+        // Parse without sections
+        $path = __DIR__ .'/../../sample.ini';
+        $ini_array = parse_ini_file($path);
+        print_r($ini_array);
 
+        // Parse with sections
+        $ini_array = parse_ini_file($path, true);
+        print_r($ini_array);
+
+        echo "<br>======</br>";
+
+        $path = __DIR__ .'/../../properties.ini';
+        $properties = parse_ini_file($path);
+            
+        echo $properties['server_version'];
+        echo $properties['apk_version'];
+
+        foreach ($properties['admins'] as $admin) {
+            echo $admin;
+        }
+
+
+        print_r($properties);
+
+    }
     public function sms($request, $response)
     {
         $number=9884873929;
@@ -89,6 +115,7 @@ var_dump( $yummy);
             $errresult['Data'] = $dataSend;
         }
         else {
+            $errresult['Resultcode'] = static::$messages['Resultcode_1'];
             $errresult['Message'] = static::$messages['Data_false'];
             $errresult['Data'] = static::$messages['No_Data'];
         }

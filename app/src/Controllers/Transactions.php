@@ -64,13 +64,14 @@ class Transactions extends Controller
         
                 else if($args['display']>=1 && $args['display']<=12)
                     $errresult['Message'] = static::$messages['No_Transactions_Month'].date("F Y", mktime(null, null, null, $args['display'], 1)).'.';
-        
+                
+                $errresult['Resultcode'] = static::$messages['Resultcode_1'];
                 $errresult['Data'] = static::$messages['No_Data'];
             }
 
         }
         else {
-           
+            $errresult['Resultcode'] = static::$messages['Resultcode_1'];
             $errresult['Message'] = static::$messages['Data_false'].' '.static::$messages['Check_Mobile'];
             $errresult['Data'] = static::$messages['No_Data'];
         }

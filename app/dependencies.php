@@ -40,18 +40,26 @@ $container['db'] = function ($c) {
 $container['errorHandler'] = function ($c) {
     return function ($request, $response, $exception) use ($c) {
 
-
         $error = [
-            'Resultcode' => 1,      
-            'Message' => $exception->getMessage(),
-            'Data' => null,      
+            'Resultcode' => -1,      
+            'Message' => "Sorry!!! Internal Server Error. Please try again later.",
+            'SQL_Message' => $exception->getMessage(),
+            //'Data' => new \stdClass(),  
+            'Data' => null,  
             'StatusCode' => $exception->getCode(),
             'File' => $exception->getFile(),
             'Line' => $exception->getLine(),
       //    'trace' => explode("\n", $exception->getTraceAsString()),
         ];
 
-    $c->get('logger')->error($error['Message'].' | '.$error['File'].' | line: '.$error['Line']);
+        if($error['StatusCode'] =="23000")
+        {   
+            $error['Resultcode'] = 2;
+            $error['Message'] = "Mobile Number already Exists!!!";
+        }
+        
+
+    $c->get('logger')->error($error['SQL_Message'].' | '.$error['File'].' | line: '.$error['Line']);
     $c->get('db')->rollBack();
   
     return $c['response']
@@ -76,7 +84,7 @@ $container['phpErrorHandler'] = function ($c) {
 $container['notFoundHandler'] = function ($c) {
     return function ($request, $response) use ($c) {
         $error = [
-            'Resultcode' => 1,      
+            'Resultcode' => -1,      
             'Message' => 'Page Not Found',
         ];
 
@@ -100,7 +108,7 @@ $container['notAllowedHandler'] = function ($c) {
             ->withHeader('Content-type', 'application/json')
             ->write(json_encode(array
                         (
-                            'Resultcode' => 1,      
+                            'Resultcode' => -1,      
                             'Message'=>'Method must be one of: ' . implode(', ', $methods)
                         )
                     )

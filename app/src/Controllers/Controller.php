@@ -5,7 +5,7 @@ namespace App\Controllers;
 use \Silalahi\Slim\Logger as Logger;
 use \Interop\Container\ContainerInterface as ContainerInterface;
 use \PDO as PDO;
-use \stdClass as stdClass;
+//use new \stdClass as stdClass;
 
 class Controller
 {
@@ -20,6 +20,9 @@ class Controller
         //'No_Data'=> '{}',
 //'No_Data'=>  array(),
 'No_Data'=>  null,
+//'No_Data'=>  new \stdClass(),      
+//'Data' => 
+
 
 
         'Resultcode_0' => 0,
@@ -32,10 +35,14 @@ class Controller
         'Customer' => 'Customer',
         'Active' => 'Active',
         'Waiting_For_Verification' => 'Waiting For Verification',
-
+        'ReVerification' => 'ReVerification',
+        'Admin_ReVerify' => 'Notification sent to Admin to ReVerify your Account.',
+        
         'Check_Mobile' => 'Please Check the Mobile Number.',
         'Account_Status_Updated' => 'Account Status Updated.', 
         'Wallet_Updated' => 'Wallet Updated.',
+        'Address_Updated' => 'Address Updated.',
+
         'Account_Status_Not_Active' => 'Account Status Not Active.', 
         'Password_Updated' => 'Password Updated.',
         'Customer_Created' => 'Welcome to Impressive Application. Your Profile has been created.',

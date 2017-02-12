@@ -46,6 +46,8 @@ $app->post($pattern.'/getPromoCodes/','Promocodes:getPromoCodes');
 $app->post($pattern.'/getRateCard/','RateCard:getRateCard');
 $app->post($pattern.'/updateRateCard/','RateCard:updateRateCard');
 $app->get($pattern.'/sms/','RateCard:sms');
+$app->get($pattern.'/readProperties/','RateCard:readProperties');
+
 
 
 // Cron Jobs

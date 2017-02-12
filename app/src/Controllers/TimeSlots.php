@@ -20,8 +20,8 @@ class TimeSlots extends Controller
         
         $data = $handle->fetchAll();
         $dataSend['Available_Slots'] = $data;
-     $errresult['Mess'] =$dataSend['Available_Slots'][0]['Slot_1'];
-$errresult['res']= ($errresult['Mess']>=8);
+        $errresult['Mess'] =$dataSend['Available_Slots'][0]['Slot_1'];
+        $errresult['res']= ($errresult['Mess']>=8);
 
         $errresult['Resultcode'] = static::$messages['Resultcode_0'];;
 
@@ -30,6 +30,7 @@ $errresult['res']= ($errresult['Mess']>=8);
             $errresult['Data'] = $dataSend;
         }
         else {
+            $errresult['Resultcode'] = static::$messages['Resultcode_1'];
             $errresult['Message'] = static::$messages['Data_false'].' '.static::$messages['No_Slots'].date('d-m-Y',$date).'.';
             $errresult['Data'] = static::$messages['No_Data'];
         }
@@ -48,18 +49,60 @@ $errresult['res']= ($errresult['Mess']>=8);
 		//$args = $request->getQueryParams();
         $args = $request->getParsedBody();
  		
- 		$handle = $this->db->prepare('Select * from time_slots where Slot_Date>= :date');
+        $handle = $this->db->prepare('SELECT * from time_slots where Slot_Date>= :date');
    
   		$today = date("Y-m-d");
-		$date = strtotime($args['date']);
+  		$date = strtotime($args['date']);
 		$current_date = date('Y-m-d',$date);
 		$handle->bindParam('date', $current_date);
 
     	$result = $handle->execute();
-		
 		$data = $handle->fetchAll();
-  	 	$dataSend['Available_Slots'] = $data;
-     
+
+     	$dataSend['Available_Slots'] = $data;
+    
+        $booked_slots=array();
+        $dates= array();
+        foreach( $data as $next_dates ) {
+
+            $handle = $this->db->prepare('SELECT REPLACE(SUBSTR(SLOT,1,6),"Slot","Booked") as Slot,
+                SUBSTR(SLOT,1,6),SLOT, SUM(COUNT) as Count FROM
+                (
+                    SELECT Pickup_Slot AS SLOT, COUNT(Order_Id) AS COUNT 
+                    FROM order_details 
+                    WHERE Pickup_Slot like ? 
+                    GROUP by Pickup_Slot 
+                    union all
+                    SELECT Delivery_Slot AS SLOT, COUNT(Order_Id) AS COUNT  
+                    FROM order_details 
+                    WHERE Delivery_Slot like ? 
+                    GROUP by Delivery_Slot
+                ) TEMP GROUP BY SLOT');
+
+            $date = strtotime($next_dates['Slot_Date']);
+            $current_date = date('d-m-Y',$date);
+            array_push($dates,$current_date);
+
+            $handle->bindValue(1, "%".$current_date."%");
+            $handle->bindValue(2, "%".$current_date."%");
+
+            $result = $handle->execute();
+            
+            $booked_data = $handle->fetchAll();
+
+            $booked_single_date= array();
+            $booked_single_date['Slot_Date']=$current_date;
+            foreach( $booked_data as $slot ) {
+                     
+                $booked_single_date[$slot['Slot']]=$slot['Count'];
+            }
+            
+            array_push($booked_slots,$booked_single_date);
+        }
+    
+        $dataSend['Booked_Slots'] = $booked_slots;
+        $dataSend['Dates'] = $dates;
+
         $errresult['Resultcode'] = static::$messages['Resultcode_0'];;
 
         if($data) {
@@ -67,6 +110,7 @@ $errresult['res']= ($errresult['Mess']>=8);
             $errresult['Data'] = $dataSend;
         }
         else {
+            $errresult['Resultcode'] = static::$messages['Resultcode_1'];
             $errresult['Message'] = static::$messages['Data_false'].' '.static::$messages['No_Slots'].date('d-m-Y',$date).'.';
             $errresult['Data'] = static::$messages['No_Data'];
         }
