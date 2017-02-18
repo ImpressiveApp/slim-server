@@ -1,0 +1,24 @@
+==Task Lists ==
+
+==Current
+
+1. remove status authntication
+2. add message field, active_timestamp in customer_details
+3. wallet threshold to be added in .ini file
+4. implement wallet_limit in create order
+5. in getcustomerverification send all apart from active(waiting , reverfication, rejected) and active_timestamp
+6. setaccountstatus -> add active_timestamp if active or add message for rejection
+7. exception for duplicate in create customer
+
+==Later
+
+1. OTP for create customer
+2. 
+2. SMS sending
+3. forgot password
+4. deactivate account
+
+==Testing
+
+1.chk gps
+2. update customer..what happens

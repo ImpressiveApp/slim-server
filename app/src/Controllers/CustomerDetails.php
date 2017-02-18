@@ -84,17 +84,22 @@ class CustomerDetails extends Controller
                 {
                     if($Password_Authentication) {
 
-                        $promoNames=preg_split("/[\s]+/",trim($arr[0]['Applicable_Promocodes']));
-                        
-                        foreach( $promoNames as $name ) {
-                 
-                            $handle1 = $this->db->prepare('Select Name, Message from promocodes where Name in (?)');
-                            $handle1->bindValue(1, $name);
 
-                            $result1 = $handle1->execute();
-                            $data1 = $handle1->fetchAll();
-                            $arr1 = array_values($data1);
-                            $applicable_promocodes[$name]=$arr1[0]['Message'];
+                        $applicable_promocodes=null;
+
+                        if($arr[0]['Applicable_Promocodes']!=null){
+                            $promoNames=preg_split("/[\s]+/",trim($arr[0]['Applicable_Promocodes']));
+                            
+                            foreach( $promoNames as $name ) {
+                     
+                                $handle1 = $this->db->prepare('Select Name, Message from promocodes where Name in (?)');
+                                $handle1->bindValue(1, $name);
+
+                                $result1 = $handle1->execute();
+                                $data1 = $handle1->fetchAll();
+                                $arr1 = array_values($data1);
+                                $applicable_promocodes[$name]=$arr1[0]['Message'];
+                            }
                         }
            
                         $auth = array
@@ -104,7 +109,7 @@ class CustomerDetails extends Controller
                                 "Customer_Name"=>$arr[0]['Customer_Name'],
                                 "Customer_AddressDetails"=>$arr[0]['Customer_AddressDetails'],
                                 "Address_Line1"=>$arr[0]['Address_Line1'],
-                                "address_Line2"=>$arr[0]['Address_Line2'],
+                                "Address_Line2"=>$arr[0]['Address_Line2'],
                                 "Area"=>$arr[0]['Area'],
                                 "State"=>$arr[0]['State'],
                                 "City"=>$arr[0]['City'],
@@ -245,9 +250,10 @@ class CustomerDetails extends Controller
         if($data2!=null) {
             $arr = array_values($data2);
             $name=$arr[0]['Name'];
-            $handle2 = $this->db->prepare('update customer_details set Applicable_Promocodes= ?');
+            $handle2 = $this->db->prepare('update customer_details set Applicable_Promocodes= ? where id= ?');
                            
             $handle2->bindValue(1, $name);
+            $handle2->bindValue(2, $id);
             $result2 = $handle2->execute();
         }  
     
