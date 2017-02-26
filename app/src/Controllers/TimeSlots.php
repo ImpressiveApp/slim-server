@@ -80,24 +80,25 @@ class TimeSlots extends Controller
                 ) TEMP GROUP BY SLOT');
 
             $date = strtotime($next_dates['Slot_Date']);
-            $current_date = date('d-m-Y',$date);
-            array_push($dates,$current_date);
+            $slot_date = date('d-m-Y',$date);
+            array_push($dates,$slot_date);
 
-            $handle->bindValue(1, "%".$current_date."%");
-            $handle->bindValue(2, "%".$current_date."%");
+            $handle->bindValue(1, "%".$slot_date."%");
+            $handle->bindValue(2, "%".$slot_date."%");
 
             $result = $handle->execute();
             
             $booked_data = $handle->fetchAll();
 
             $booked_single_date= array();
-            $booked_single_date['Slot_Date']=$current_date;
+            $booked_single_date['Slot_Date']=$slot_date;
             foreach( $booked_data as $slot ) {
                      
                 $booked_single_date[$slot['Slot']]=$slot['Count'];
             }
-            
+     
             array_push($booked_slots,$booked_single_date);
+
         }
     
         $dataSend['Booked_Slots'] = $booked_slots;

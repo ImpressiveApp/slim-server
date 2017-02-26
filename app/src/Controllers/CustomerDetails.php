@@ -43,7 +43,7 @@ class CustomerDetails extends Controller
         
         $this->db->beginTransaction();
         
-        $handle = $this->db->prepare('Select Customer_Mobno, Customer_AddressDetails, Address_Line1, Address_Line2, Area, City, State, Pincode, Customer_Emailid,Customer_Name,Customer_Password, Wallet,isAdmin,Account_Status,Applicable_Promocodes, Referral_Code, isRefProcessed from customer_details where Customer_Mobno = ?');
+        $handle = $this->db->prepare('Select Customer_Mobno,  Address_Line1, Address_Line2, Area, City, State, Pincode, Customer_Emailid,Customer_Name,Customer_Password, Wallet,isAdmin,Account_Status,Applicable_Promocodes, Referral_Code, isRefProcessed from customer_details where Customer_Mobno = ?');
            
         $_REQUEST['Customer_Mobno']=$args['mobno'];
         $_REQUEST['Customer_Password']=$args['password'];
@@ -76,8 +76,8 @@ class CustomerDetails extends Controller
             
             if($Admin_Authentication)
             {
-                $status_authentication=false;
-                if($arr[0]['Account_Status']==static::$messages['Active'])
+             //   $status_authentication=false;
+             //   if($arr[0]['Account_Status']==static::$messages['Active'])
                 $status_authentication=true;
 
                 if($status_authentication)
@@ -107,7 +107,6 @@ class CustomerDetails extends Controller
                                 "Customer_Mobno"=>$arr[0]['Customer_Mobno'],
                                 "EmailId"=>$arr[0]['Customer_Emailid'],
                                 "Customer_Name"=>$arr[0]['Customer_Name'],
-                                "Customer_AddressDetails"=>$arr[0]['Customer_AddressDetails'],
                                 "Address_Line1"=>$arr[0]['Address_Line1'],
                                 "Address_Line2"=>$arr[0]['Address_Line2'],
                                 "Area"=>$arr[0]['Area'],
@@ -176,13 +175,12 @@ class CustomerDetails extends Controller
         
         $this->db->beginTransaction();
 
-        $handle = $this->db->prepare('insert into customer_details(Customer_Name,Customer_Mobno,Customer_Emailid,Customer_AddressDetails,Address_line1,Address_line2, Area, City, State, Pincode,Customer_GPSLan,Customer_GPSLon,Customer_Password,isAdmin,Account_Status,Wallet,Referree_Code,Referral_Code,isRefProcessed) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)');
+        $handle = $this->db->prepare('insert into customer_details(Customer_Name,Customer_Mobno,Customer_Emailid,Address_line1,Address_line2, Area, City, State, Pincode,Customer_GPSLan,Customer_GPSLon,Customer_Password,isAdmin,Account_Status,Wallet,Referree_Code,Referral_Code,isRefProcessed) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)');
     
         $_REQUEST['Category']=ucfirst($args['category']);
         $_REQUEST['Customer_Name']=ucwords($args['name']);
         $_REQUEST['Customer_Mobno']=$args['mobno'];
         $_REQUEST['Customer_Emailid']=$args['emailid'];
-        $_REQUEST['Customer_AddressDetails']=$args['address'];
         $_REQUEST['Address_line1']=$args['address_line1'];
         $_REQUEST['Address_line2']=$args['address_line2'];
         $_REQUEST['Area']=$args['area'];
@@ -200,36 +198,32 @@ class CustomerDetails extends Controller
         $handle->bindValue(1, $_REQUEST['Customer_Name']);
         $handle->bindValue(2, $_REQUEST['Customer_Mobno']);
         $handle->bindValue(3, $_REQUEST['Customer_Emailid']);
-        $handle->bindValue(4, $_REQUEST['Customer_AddressDetails']);
-        $handle->bindValue(5, $_REQUEST['Address_line1']);
-        $handle->bindValue(6, $_REQUEST['Address_line2']);
-        $handle->bindValue(7, $_REQUEST['Area']);
-        $handle->bindValue(8, $_REQUEST['City']);
-        $handle->bindValue(9, $_REQUEST['State']);
-        $handle->bindValue(10, $_REQUEST['Pincode']);
-
-
-
-        $handle->bindValue(11, $_REQUEST['Customer_GPSLan']);
-        $handle->bindValue(12, $_REQUEST['Customer_GPSLon']);
-        $handle->bindValue(13, password_hash($_REQUEST['Customer_Password'], PASSWORD_DEFAULT));
+        $handle->bindValue(4, $_REQUEST['Address_line1']);
+        $handle->bindValue(5, $_REQUEST['Address_line2']);
+        $handle->bindValue(6, $_REQUEST['Area']);
+        $handle->bindValue(7, $_REQUEST['City']);
+        $handle->bindValue(8, $_REQUEST['State']);
+        $handle->bindValue(9, $_REQUEST['Pincode']);
+        $handle->bindValue(10, $_REQUEST['Customer_GPSLan']);
+        $handle->bindValue(11, $_REQUEST['Customer_GPSLon']);
+        $handle->bindValue(12, password_hash($_REQUEST['Customer_Password'], PASSWORD_DEFAULT));
 
         if($_REQUEST['Category']==static::$messages['Admin']) {
             $_REQUEST['Account_Status']=static::$messages['Active'];
-            $handle->bindValue(14, 1);
-            $handle->bindValue(17, 'NOTAPPLY');
-            $handle->bindValue(19, 'U');
+            $handle->bindValue(13, 1);
+            $handle->bindValue(16, 'NOTAPPLY');
+            $handle->bindValue(18, 'U');
         }
         else if($_REQUEST['Category']==static::$messages['Customer']) {
             $_REQUEST['Account_Status']=static::$messages['Waiting_For_Verification'];    
-            $handle->bindValue(14, 0);
-            $handle->bindValue(17, $_REQUEST['Referree_Code']);
-            $handle->bindValue(19, $_REQUEST['isRefProcessed']);
+            $handle->bindValue(13, 0);
+            $handle->bindValue(16, $_REQUEST['Referree_Code']);
+            $handle->bindValue(18, $_REQUEST['isRefProcessed']);
         }
 
-        $handle->bindValue(15, $_REQUEST['Account_Status']);
-        $handle->bindValue(16, 0);
-        $handle->bindValue(18, $this->getReferralCode($_REQUEST['Customer_Mobno']));
+        $handle->bindValue(14, $_REQUEST['Account_Status']);
+        $handle->bindValue(15, 0);
+        $handle->bindValue(17, $this->getReferralCode($_REQUEST['Customer_Mobno']));
 
 
         $result = $handle->execute();
@@ -277,10 +271,13 @@ class CustomerDetails extends Controller
         else
             $sms_type="create_new_customer";
         $sms_data=array($data->Customer_Name,$data->Referree_Code,null);
-        $this->testsms($sms_number,$sms_type,$sms_data);
+        //$this->testsms($sms_number,$sms_type,$sms_data);
+        $this->sendNewSMS($sms_number,$sms_type,$sms_data);
+        
       
         $this->db->commit();
         $this->db = null;
+        $this->logger->info("in customer after commit before return");
         return $response
             ->withHeader('Content-Type', 'application/json')
             ->write(json_encode($errresult,JSON_PRETTY_PRINT));
@@ -514,6 +511,48 @@ class CustomerDetails extends Controller
         return $response->withJson($errresult);
     }  
 
+    public function updatePassword($args)
+    {
+         $_REQUEST['Customer_Password']=$args['oldpassword'];
+        $_REQUEST['New_Password']=$args['newpassword'];
+
+        $_REQUEST['Customer_Mobno']=$args['mobno'];
+        $_REQUEST['Customer_Password']=$args['password'];
+
+        $handle1 = $this->db->prepare('Select * from customer_details where  
+            Customer_Mobno= :Customer_Mobno');
+        $handle1->bindParam('Customer_Mobno', $args['mobno']);
+        $result1= $handle1->execute();
+          
+        $data = $handle1->fetchAll();
+        $arr = array_values($data);
+ 
+        $errresult['Resultcode'] = static::$messages['Resultcode_0'];;
+
+        if($data) {
+
+            $handle = $this->db->prepare('update customer_details set Customer_Password = ? where Customer_Mobno = ?');
+    
+            $handle->bindValue(1, password_hash($_REQUEST['Customer_Password'], PASSWORD_DEFAULT));
+    
+            $handle->bindValue(2, $_REQUEST['Customer_Mobno']);
+            $result = $handle->execute();
+
+            $result1= $handle1->execute();
+            $data = $handle1->fetchObject();
+            
+            $errresult['Message'] = static::$messages['Data_true'].' '.static::$messages['Password_Updated'];
+            $errresult['Data'] = $data;
+        }
+        else {
+            $errresult['Resultcode'] = static::$messages['Resultcode_1'];
+            $errresult['Message'] = static::$messages['Data_false'].' '.static::$messages['Check_Mobile'];
+            $errresult['Data'] = static::$messages['No_Data'];
+        }
+      
+
+    }
+
     public function updateCustomer($request, $response)
     {
         $args = $request->getParsedBody();
@@ -525,8 +564,6 @@ class CustomerDetails extends Controller
         $_REQUEST['Customer_Mobno']=$args['mobno'];
         $_REQUEST['New_Mobno']=$args['newmobno'];
         $_REQUEST['Customer_Emailid']=$args['emailid'];
-        $_REQUEST['Customer_AddressDetails']=$args['address'];
-
         $_REQUEST['Address_Line1']=$args['address_line1'];
         $_REQUEST['Address_Line2']=$args['address_line2'];
         $_REQUEST['Area']=$args['area'];
@@ -553,131 +590,120 @@ class CustomerDetails extends Controller
             $arr = array_values($data);
             $id=$arr[0]['Id'];   
 
-            $Password_Authentication=password_verify($_REQUEST['Customer_Password'],$arr[0]['Customer_Password']);
+            $errresult['Message'] = static::$messages['Data_true'];
+            
+            if($_REQUEST['New_Password']!=null)
+            {
+                $Password_Authentication=password_verify($_REQUEST['Customer_Password'],$arr[0]['Customer_Password']);
 
-            if($Password_Authentication) {
-                
-                $errresult['Message'] = static::$messages['Data_true'];
-                
-                $handle = $this->db->prepare('update customer_details set Customer_Name = ?,Customer_Emailid = ?,Customer_AddressDetails = ?, Address_line1 = ?, Address_line2 = ?, Area = ?, City = ?, State = ?, Pincode = ?,Customer_GPSLan = ?,Customer_GPSLon = ?,isAdmin= ?,Account_Status = ? ,Customer_Password=?, Wallet=(Wallet+?), Customer_Mobno=? where Id = ?');
-      
-                $handle->bindValue(1, $_REQUEST['Customer_Name']);
-                $handle->bindValue(2, $_REQUEST['Customer_Emailid']);
-                $handle->bindValue(3, $_REQUEST['Customer_AddressDetails']);
-            //    $handle->bindValue(4, $_REQUEST['Address_line1']);
-            //    $handle->bindValue(5, $_REQUEST['Address_line2']);
-           //     $handle->bindValue(6, $_REQUEST['Area']);
-            //    $handle->bindValue(7, $_REQUEST['City']);
-            //    $handle->bindValue(8, $_REQUEST['State']);
-            //    $handle->bindValue(9, $_REQUEST['Pincode']);
+                if($Password_Authentication) {
 
-
-                $handle->bindValue(10, $_REQUEST['Customer_GPSLan']);
-                $handle->bindValue(11, $_REQUEST['Customer_GPSLon']);
-
-                $_REQUEST['Account_Status']=$arr[0]['Account_Status'];
-                if($_REQUEST['Category']=="admin")                  
-                    $handle->bindValue(12, 1);
-                
-                else if($_REQUEST['Category']=='customer') 
-                    $handle->bindValue(12, 0);
-                
-                $address = array(
-                    "Address_Line1" => 4,
-                    "Address_Line2" => 5,
-                    "Area" => 6,
-                    "City" => 7,
-                    "State" => 8,
-                    "Pincode" => 9
-                );
-
-                $isAddressUpdated=0;
-                foreach ($address as $key => $value) {
-                    
-                    if($_REQUEST[$key]==null||$_REQUEST[$key]==$arr[0][$key]) 
-                       $handle->bindValue($value, $arr[0][$key]);
-                        
-                    else {
-                        $handle->bindValue($value, $_REQUEST[$key]);
-                        $isAddressUpdated=1;
-                        $_REQUEST['Account_Status']=static::$messages['ReVerification'];
-                    }
-
-                }
-
-                if($isAddressUpdated==1)
-                    $errresult['Message'] = $errresult['Message'].' '.static::$messages['Address_Updated'].' '.static::$messages['Admin_ReVerify'];
-                   
-                $handle->bindValue(17, $id);
-
-                //updating Password      
-                if($_REQUEST['New_Password']==null||$_REQUEST['New_Password']==$_REQUEST['Customer_Password']) {
-                
-                       $handle->bindValue(14, password_hash($_REQUEST['Customer_Password'], PASSWORD_DEFAULT));
-                }
-                else {
-                    $handle->bindValue(14, password_hash($_REQUEST['New_Password'], PASSWORD_DEFAULT));
+                    $handle2 = $this->db->prepare('update customer_details set Customer_Password = ? where Customer_Mobno = ?');
+        
+                    $handle2->bindValue(1, password_hash($_REQUEST['New_Password'], PASSWORD_DEFAULT));
+                     
+                    $handle2->bindValue(2, $_REQUEST['Customer_Mobno']);
+                    $result2 = $handle2->execute();
 
                     $errresult['Message'] = $errresult['Message'].' '.static::$messages['Password_Updated'];
-                }
-
-                //updating wallet
-                if($_REQUEST['Wallet']>0) {
-                    $handle->bindValue(15, $_REQUEST['Wallet']);
-
-                    $errresult['Message'] = $errresult['Message'].' '.static::$messages['Wallet_Updated'];
-
-                    $handle4 = $this->db->prepare("insert into transactions (Customer_Mobno,Amount,Comment) values (?,?,?)");
-
-                    $comment=static::$messages['Amount_Rs'].$_REQUEST['Wallet'].' '.static::$messages['Amount_Credit'];
-                    $handle4->bindValue(1, $_REQUEST['Customer_Mobno']);
-                    $handle4->bindValue(2, $_REQUEST['Wallet']);
-                    $handle4->bindValue(3, $comment);
-                    $result4 = $handle4->execute();
-
-                }
+                    }
+               
                 else {
-                    $handle->bindValue(15, 0);
+                    $errresult['Message'] = $errresult['Message'].' '.static::$messages['Password_Not_Updated'];
                 }
+            }
+                
+            $handle = $this->db->prepare('update customer_details set Customer_Name = ?,Customer_Emailid = ?, Address_line1 = ?, Address_line2 = ?, Area = ?, City = ?, State = ?, Pincode = ?,Customer_GPSLan = ?,Customer_GPSLon = ?,isAdmin= ?,Account_Status = ? , Wallet=(Wallet+?), Customer_Mobno=? where Id = ?');
+  
+            $handle->bindValue(1, $_REQUEST['Customer_Name']);
+            $handle->bindValue(2, $_REQUEST['Customer_Emailid']);
+            $address = array(
+                        "Address_Line1" => 3,
+                        "Address_Line2" => 4,
+                        "Area" => 5,
+                        "City" => 6,
+                        "State" => 7,
+                        "Pincode" => 8
+                    );
 
-                //update customer mobno
-                if($_REQUEST['New_Mobno']==null||$_REQUEST['New_Mobno']==$_REQUEST['Customer_Mobno']) {
-                    $handle->bindValue(16, $_REQUEST['Customer_Mobno']);
-                }
+            $handle->bindValue(9, $_REQUEST['Customer_GPSLan']);
+            $handle->bindValue(10, $_REQUEST['Customer_GPSLon']);
+
+            $_REQUEST['Account_Status']=$arr[0]['Account_Status'];
+            if($_REQUEST['Category']=="admin")                  
+                $handle->bindValue(11, 1);
+            
+            else if($_REQUEST['Category']=='customer') 
+                $handle->bindValue(11, 0);
+  
+            $isAddressUpdated=0;
+            foreach ($address as $key => $value) {
+                
+                if($_REQUEST[$key]==null||$_REQUEST[$key]==$arr[0][$key]) 
+                   $handle->bindValue($value, $arr[0][$key]);
+                    
                 else {
-
-                    $handle->bindValue(16, $_REQUEST['New_Mobno']);
-
-                    $handle2 = $this->db->prepare("update order_details set Customer_Mobno=? where Customer_Mobno=?");
-                    $handle2->bindValue(1, $_REQUEST['New_Mobno']);
-                    $handle2->bindValue(2, $_REQUEST['Customer_Mobno']);
-                    $result2 = $handle2->execute();
-
-                    $handle2 = $this->db->prepare("update transactions set Customer_Mobno=? where Customer_Mobno=?");
-                    $handle2->bindValue(1, $_REQUEST['New_Mobno']);
-                    $handle2->bindValue(2, $_REQUEST['Customer_Mobno']);
-                    $result2 = $handle2->execute();
+                    $handle->bindValue($value, $_REQUEST[$key]);
+                    $isAddressUpdated=1;
                     $_REQUEST['Account_Status']=static::$messages['ReVerification'];
-                    $errresult['Message'] = $errresult['Message'].' '.static::$messages['Mobile_Updated'].' '.static::$messages['Admin_ReVerify'];
-
                 }
-                $handle->bindValue(13, $_REQUEST['Account_Status']);
-                $result = $handle->execute();
-           
-                $handle2 = $this->db->prepare('Select * from customer_details where Id=?');
-                $handle2->bindValue(1, $id);
-                $handle2->execute();
-                $data = $handle2->fetchAll();
-                $errresult['Data'] = $data;
-              
-            }
-           
-            else {
-                $errresult['Resultcode'] = static::$messages['Resultcode_1'];
-                $errresult['Message'] = static::$messages['Check_Password'];
-                $errresult['Data'] = static::$messages['No_Data'];
+
             }
 
+            if($isAddressUpdated==1)
+                $errresult['Message'] = $errresult['Message'].' '.static::$messages['Address_Updated'].' '.static::$messages['Admin_ReVerify'];
+               
+            $handle->bindValue(15, $id);
+
+            //updating wallet
+            if($_REQUEST['Wallet']>0) {
+                $handle->bindValue(13, $_REQUEST['Wallet']);
+
+                $errresult['Message'] = $errresult['Message'].' '.static::$messages['Wallet_Updated'];
+
+                $handle4 = $this->db->prepare("insert into transactions (Customer_Mobno,Amount,Comment) values (?,?,?)");
+
+                $comment=static::$messages['Amount_Rs'].$_REQUEST['Wallet'].' '.static::$messages['Amount_Credit'];
+                $handle4->bindValue(1, $_REQUEST['Customer_Mobno']);
+                $handle4->bindValue(2, $_REQUEST['Wallet']);
+                $handle4->bindValue(3, $comment);
+                $result4 = $handle4->execute();
+
+            }
+            else {
+                $handle->bindValue(13, 0);
+            }
+
+            //update customer mobno
+            if($_REQUEST['New_Mobno']==null||$_REQUEST['New_Mobno']==$_REQUEST['Customer_Mobno']) {
+                $handle->bindValue(14, $_REQUEST['Customer_Mobno']);
+            }
+            else {
+
+                $handle->bindValue(14, $_REQUEST['New_Mobno']);
+
+                $handle2 = $this->db->prepare("update order_details set Customer_Mobno=? where Customer_Mobno=?");
+                $handle2->bindValue(1, $_REQUEST['New_Mobno']);
+                $handle2->bindValue(2, $_REQUEST['Customer_Mobno']);
+                $result2 = $handle2->execute();
+
+                $handle2 = $this->db->prepare("update transactions set Customer_Mobno=? where Customer_Mobno=?");
+                $handle2->bindValue(1, $_REQUEST['New_Mobno']);
+                $handle2->bindValue(2, $_REQUEST['Customer_Mobno']);
+                $result2 = $handle2->execute();
+                $_REQUEST['Account_Status']=static::$messages['ReVerification'];
+                $errresult['Message'] = $errresult['Message'].' '.static::$messages['Mobile_Updated'].' '.static::$messages['Admin_ReVerify'];
+
+            }
+            $handle->bindValue(12, $_REQUEST['Account_Status']);
+            $result = $handle->execute();
+       
+            $handle2 = $this->db->prepare('Select * from customer_details where Id=?');
+            $handle2->bindValue(1, $id);
+            $handle2->execute();
+            $data = $handle2->fetchAll();
+            $errresult['Data'] = $data;
+          
         }
         else {          
             $errresult['Resultcode'] = static::$messages['Resultcode_1']; 

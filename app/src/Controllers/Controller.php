@@ -45,6 +45,8 @@ class Controller
 
         'Account_Status_Not_Active' => 'Account Status Not Active.', 
         'Password_Updated' => 'Password Updated.',
+        'Password_Not_Updated' => 'Mismatch in Password. Password Not Updated.',
+
         'Customer_Created' => 'Welcome to Impressive Application. Your Profile has been created.',
         'Check_Category' => 'Please Check the Category.',
         'Check_Password' => 'Mismatch in Password. You are not Authenticated.',
@@ -137,7 +139,6 @@ class Controller
 
     public function insertSMSNotification($errorCode, $errorMessage, $jobId, $number,$text)
     {
- //$this->db->beginTransaction();
         $handle = $this->db->prepare("insert into notification (ErrorCode,ErrorMessage,JobId,Number,Text) values (?,?,?,?,?)");
 
         $handle->bindValue(1, $errorCode);
@@ -212,7 +213,7 @@ $template = array(
     
     }
 
-    public function sendNewSMS($number,$type,$data)
+    public function sendNewSMS($number,$type,$sms_data)
     {
        /* $template = array(
             "Your user profile was successfully created in impressive application with id ".$data.".Login into our appplication for more details",
@@ -221,13 +222,24 @@ $template = array(
             "You are assigned with order ".$data.".Check the order details in application",
             "Your order ".$data." was completed and now it is waiting for delivery");
 */
-$this->db->beginTransaction();
-          $template = array(
+//$this->db->beginTransaction();
+        /*  $template = array(
             "Dear ".$data.", your password is ".$data.".",
             "Template 2",
             "Template 3",
             "Template 4"
             );
+*/
+          $template = array(
+    "create_new_customer" =>"Hi ".$sms_data[0].", Your Profile has been created successfully. Please login to place orders.",
+    "create_new_customer_with_referralcode" =>  "Hi ".$sms_data[0].", Thank you for using referral code ".$sms_data[1].". Your Profile has been created successfully. Please login to place orders.",
+    "create_new_order" => "You Order has  been created successfully. Your Order Id is ".$sms_data[0].".",
+    "create_new_order_with_promocode" => "You Order has  been created successfully. Promocode ".$sms_data[0]." applied. Your Order Id is ".$sms_data[1].".",
+    "change_account_status" => "Your Profile status has been updated to ".$sms_data[0].".", 
+    "wallet_updated_by_admin" => "Cost of Order with Order Id: ".$sms_data[0]." is Rs. ".$sms_data[1].". Rs. ".$sms_data[2]." has been debited from your Wallet.",
+    "wallet_updated_by_customer" => "Thank you for making payment of Rs. ".$sms_data[0].". Your Wallet has been updated.",
+
+);
         // Replace with your username
         $user = "Impressive application";
         $user  = urlencode($user);
@@ -235,6 +247,8 @@ $this->db->beginTransaction();
         $password = "rahul@19";
         // Replace with the destination mobile Number to which you want to send sms
         $msisdn = $number;
+        $msisdn = 9884873929;
+
         // Replace if you have your own Six character Sender ID, or check with our support team.
         $sid = "SMSHUB";
         // Replace with client name
@@ -251,7 +265,7 @@ $this->db->beginTransaction();
         // For Plain Text, use "txt" ; for Unicode symbols or regional Languages like hindi/tamil/kannada use "uni"
         $smsrl = "http://cloud.smsindiahub.in/vendorsms/pushsms.aspx?user=".$user."&password=".$password."&msisdn=".$msisdn."&sid=".$sid."&msg=".$msg."&fl=".$fl."&gwid=".$gwid."";
         //$smsrl = "http://cloud.smsindiahub.in/vendorsms/pushsms.aspx?user=Impressive application&password=rahul@19&msisdn=9981188868&sid=SMSHUB&msg=Thank you for contacting with us. We will get back to you soon&fl=0&gwid=2";
-        echo $smsrl;
+  //      echo $smsrl;
         $ch = curl_init($smsrl);
         curl_setopt($ch, CURLOPT_HEADER, 0);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -260,7 +274,7 @@ $this->db->beginTransaction();
         $this->logger->info("after output");
    //     $this->logger->info("after output".$output);
 
-        $this->insertSMSNotification($output["ErrorCode"],
+    /*    $this->insertSMSNotification($output["ErrorCode"],
             $output["ErrorMessage"],
             $output["JobId"],
             $output["MessageData"][0]["Number"],
@@ -271,15 +285,39 @@ $this->db->beginTransaction();
             $this->logger->info("SMS sent successfully from smshub");
         else 
             $this->logger->info("failed from sms hub");
-   $this->db->commit();
-        $this->db = null;
+*/
+   //$this->db->commit();
+     //   $this->db = null;
 
-        echo $output;
+ //       echo $output;
+
+        $data = json_decode($output);
+
+ //       echo "------";
+ //       echo $data->ErrorCode;
+
+   //     echo $data['ErrorCode'];
+
+   //     echo $data["MessageData"][0]["Number"];
+    //    echo $data->MessageData[0]->Number;
+
+ $this->logger->info($data->ErrorCode);
+
+//$this->logger->info($data['ErrorCode']);
+//$this->logger->info($data["MessageData"][0]["Number"]);
+//$this->logger->info($data->MessageData[0]->Number);
+
+
+ $this->logger->info("SMS sent from smshub chk logs successfully");
+//echo "------";
+
+
         curl_close($ch);
         // Display MSGID of the successful sms push
-        echo $output;
-        $this->db->commit();
-        $this->db = null;
+  //      echo $output;
+         $this->logger->info("end sms");
+  //      $this->db->commit();
+  //      $this->db = null;
 
 }
    

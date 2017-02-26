@@ -242,7 +242,7 @@ class OrderDetails extends Controller
         $_REQUEST['No_Of_Items']=$args['noOfItems'];
         $_REQUEST['Pickup_Slot']=$args['pickupSlot'];
         $_REQUEST['Delivery_Slot']=$args['deliverySlot'];
-        $_REQUEST['Address']=$args['address'];        
+     //   $_REQUEST['Address']=$args['address'];        
         $_REQUEST['Address_line1']=$args['address_line1'];
         $_REQUEST['Address_line2']=$args['address_line2'];
         $_REQUEST['Area']=$args['area'];
@@ -272,7 +272,7 @@ class OrderDetails extends Controller
                
                 $id=$arr[0]['Id'];
                
-                $handle = $this->db->prepare('insert into order_details(Customer_Mobno,Order_Status,No_Of_Items,Address,Address_line1,Address_line2, Area, City, State, Pincode,Type_Of_Clothes,Cost,Pickup_Slot,Delivery_Slot,Applied_Promocode) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)');
+                $handle = $this->db->prepare('insert into order_details(Customer_Mobno,Order_Status,No_Of_Items,Address_line1,Address_line2, Area, City, State, Pincode,Type_Of_Clothes,Cost,Pickup_Slot,Delivery_Slot,Applied_Promocode) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)');
  
 
                 $value =explode("_",$_REQUEST['Pickup_Slot']);
@@ -311,18 +311,17 @@ class OrderDetails extends Controller
                 $handle->bindValue(1, $_REQUEST['Customer_Mobno']);
                 $handle->bindValue(2, $_REQUEST['Order_Status']);
                 $handle->bindValue(3, $_REQUEST['No_Of_Items']);
-                $handle->bindValue(4, $_REQUEST['Address']);
-                $handle->bindValue(5, $_REQUEST['Address_line1']);
-                $handle->bindValue(6, $_REQUEST['Address_line2']);
-                $handle->bindValue(7, $_REQUEST['Area']);
-                $handle->bindValue(8, $_REQUEST['City']);
-                $handle->bindValue(9, $_REQUEST['State']);
-                $handle->bindValue(10, $_REQUEST['Pincode']);
-                $handle->bindValue(11, $_REQUEST['Types']);
-                $handle->bindValue(12, $_REQUEST['Cost']);
-                $handle->bindValue(13, $_REQUEST['Pickup_Slot']);
-                $handle->bindValue(14, $_REQUEST['Delivery_Slot']);
-                $handle->bindValue(15, $_REQUEST['Promocode']);
+                $handle->bindValue(4, $_REQUEST['Address_line1']);
+                $handle->bindValue(5, $_REQUEST['Address_line2']);
+                $handle->bindValue(6, $_REQUEST['Area']);
+                $handle->bindValue(7, $_REQUEST['City']);
+                $handle->bindValue(8, $_REQUEST['State']);
+                $handle->bindValue(9, $_REQUEST['Pincode']);
+                $handle->bindValue(10, $_REQUEST['Types']);
+                $handle->bindValue(11, $_REQUEST['Cost']);
+                $handle->bindValue(12, $_REQUEST['Pickup_Slot']);
+                $handle->bindValue(13, $_REQUEST['Delivery_Slot']);
+                $handle->bindValue(14, $_REQUEST['Promocode']);
 
                 // Reducing 1 from Pickup Slot
                 $handle2 = $this->db->prepare("update time_slots set ".$pickup_slot."=".$pickup_slot."-1 where Slot_Date=?");
@@ -416,6 +415,10 @@ class OrderDetails extends Controller
       
         $errresult['StatusCode'] = $entry_handle->errorCode();
         
+        
+        if($errresult['Data'] != null)
+        {
+            
         $sms_number=$data->Customer_Mobno;
         if($data->Applied_Promocode != null) {
             $sms_type="create_new_order_with_promocode"; 
@@ -428,6 +431,8 @@ class OrderDetails extends Controller
         }
 
         $this->testsms($sms_number,$sms_type,$sms_data);
+
+    }
       
 
         $this->db->commit();
@@ -452,8 +457,7 @@ class OrderDetails extends Controller
         $_REQUEST['No_Of_Items']=$args['noOfItems'];
         $_REQUEST['Pickup_Slot']=$args['pickupSlot'];
         $_REQUEST['Delivery_Slot']=$args['deliverySlot'];
-        $_REQUEST['Address']=$args['address'];
-
+   
         $_REQUEST['Address_line1']=$args['address_line1'];
         $_REQUEST['Address_line2']=$args['address_line2'];
         $_REQUEST['Area']=$args['area'];
@@ -481,22 +485,21 @@ class OrderDetails extends Controller
             $arr = array_values($data);
             $Applied_Promocode=$arr[0]['Applied_Promocode'];
 
-            $order_handle = $this->db->prepare('update order_details set Order_Status=?,No_Of_Items =? ,Address=?, Address_line1 = ?, Address_line2 = ?, Area = ?, City = ?, State = ?, Pincode = ?, Type_Of_Clothes =?, Cost =?, Before_Discount=?,Pickup_Slot =? ,Delivery_Slot=? where order_id=?');
+            $order_handle = $this->db->prepare('update order_details set Order_Status=?,No_Of_Items =? , Address_line1 = ?, Address_line2 = ?, Area = ?, City = ?, State = ?, Pincode = ?, Type_Of_Clothes =?, Cost =?, Before_Discount=?,Pickup_Slot =? ,Delivery_Slot=? where order_id=?');
             $cost = $_REQUEST['Cost'];
             $order_handle->bindValue(1, $_REQUEST['Order_Status']);
             $order_handle->bindValue(2, $_REQUEST['No_Of_Items']);
-            $order_handle->bindValue(3, $_REQUEST['Address']);
-            $order_handle->bindValue(4, $_REQUEST['Address_line1']);
-            $order_handle->bindValue(5, $_REQUEST['Address_line2']);
-            $order_handle->bindValue(6, $_REQUEST['Area']);
-            $order_handle->bindValue(7, $_REQUEST['City']);
-            $order_handle->bindValue(8, $_REQUEST['State']);
-            $order_handle->bindValue(9, $_REQUEST['Pincode']);
+            $order_handle->bindValue(3, $_REQUEST['Address_line1']);
+            $order_handle->bindValue(4, $_REQUEST['Address_line2']);
+            $order_handle->bindValue(5, $_REQUEST['Area']);
+            $order_handle->bindValue(6, $_REQUEST['City']);
+            $order_handle->bindValue(7, $_REQUEST['State']);
+            $order_handle->bindValue(8, $_REQUEST['Pincode']);
 
-            $order_handle->bindValue(10, $_REQUEST['Types']);
+            $order_handle->bindValue(9, $_REQUEST['Types']);
 
             if($Applied_Promocode==NULL) {
-                $order_handle->bindValue(11, $_REQUEST['Cost']);                
+                $order_handle->bindValue(10, $_REQUEST['Cost']);                
             }
             else {
                 $handle4 = $this->db->prepare("select Discount from promocodes where Name=?");
@@ -507,13 +510,13 @@ class OrderDetails extends Controller
 
                 $discount=$arr4[0]['Discount'];
                 $cost= $_REQUEST['Cost'] -($_REQUEST['Cost']*$discount/100.0);
-                $order_handle->bindValue(11, $cost);
+                $order_handle->bindValue(10, $cost);
             }
 
-            $order_handle->bindValue(12, $_REQUEST['Cost']);
-            $order_handle->bindValue(13, $_REQUEST['Pickup_Slot']);
-            $order_handle->bindValue(14, $_REQUEST['Delivery_Slot']);
-            $order_handle->bindValue(15, $_REQUEST['Order_Id']);
+            $order_handle->bindValue(11, $_REQUEST['Cost']);
+            $order_handle->bindValue(12, $_REQUEST['Pickup_Slot']);
+            $order_handle->bindValue(13, $_REQUEST['Delivery_Slot']);
+            $order_handle->bindValue(14, $_REQUEST['Order_Id']);
 
             // Order Update
             $result = $order_handle->execute();

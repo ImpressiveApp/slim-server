@@ -11,5 +11,8 @@ $ php -S localhost:7040
 
  git commit -m "2017-2-18 - Bug Fixes"
 
+ster)
+$  git commit -m "2-18-2017 - Bug Fixes"
+
 
 
