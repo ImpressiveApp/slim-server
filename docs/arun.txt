@@ -1,0 +1,83 @@
+
+1. Added both new services of rate card
+
+2. added unpaidorders
+
+3. sms integrating test==============
+
+4. get post  ==============
+
+5. transaction messages are inserted =======
+
+6. in authentication ..name and messages sent as key: value pair === some error .. if extra space check
+
+7. split deprecated.===============
+
+8. promocodes
+  8.1 expired onces are deleted.
+  8.2 festival..promocode removed from applciable and used
+  8.3 other 
+	8.3.1 while creating promo check whether not in used
+	8.3.2 after expiry ..delete only from applicable
+	
+9. refercalcodeprocessor .. added transaction for updated custoemr
+
+5 transactionHistory  update  amt order	
+6				crezteorser no insert
+				
+10. sendmessage function
+9 .sendmessage function
+
+10. create order.with slot details
+call ths function
+
+11 admin num from property file
+
+1. new custoemr call sms...go to custoemr admin
+2. new order...custoemr admin 
+3. change in status to customer
+4. when admin status of new custoemr to admin and customer
+5. admin customer wallet update to customer and admin
+6. referencal code used
+7. getrefprocess msg
+
+=====
+notification
+id phone messages rec_timestamp 
+
+newcustomer..after inserting statement
+
+property file
+
+one admin..proper
+
+table...
+
+getuser
+
+rec_timestamp
+
+split not working
+
+savepoint
+
+security part
+
+db backup
+
+one admin..property file..name area phone..address pincode
+
+impressiveappcode@gmail.com
+
+abcd@1234
+
+=======
+ratecard
+category varchar 50
+price varchar 50
+
+static website  ..lunch product
+
+server load
+
+excel to 

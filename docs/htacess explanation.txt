@@ -1,0 +1,9 @@
+
+
+# NC make the rule non case sensitive
+# L make the the last rule that this specific condition will match
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+... means that if the file with the specified name in the browser doesn't exist, or the directory in the browser doesn't exist then procede to the rewrite rule below smile

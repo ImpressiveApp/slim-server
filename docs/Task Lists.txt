@@ -2,15 +2,30 @@
 
 ==Current
 
-1. remove status authntication
-2. add message field, active_timestamp in customer_details
-3. wallet threshold to be added in .ini file
 4. implement wallet_limit in create order
-5. in getcustomerverification send all apart from active(waiting , reverfication, rejected) and active_timestamp
-6. setaccountstatus -> add active_timestamp if active or add message for rejection
+
 7. exception for duplicate in create customer
 
-8. booked
+
+==done
+--1. remove status authntication
+--2. add message field, active_timestamp in customer_details
+
+--3. wallet threshold to be added in .ini file
+--5. in getcustomerverification send all apart from active(waiting , reverfication, rejected) and active_timestamp
+--6. setaccountstatus -> add active_timestamp if active or add message for rejection
+--8. booked
+--9. pincode send in autntication. send in array
+--10. wallet
+
+
+
+==customer status
+wait
+reverifi
+rejected
+active
+inactive
 
 wallet
 

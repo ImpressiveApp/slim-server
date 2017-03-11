@@ -37,6 +37,9 @@ $container['db'] = function ($c) {
     return $pdo;
 };
 
+//errorHandler to trap PHP Exceptions
+//phpErrorHandler to trap PHP 7 Errors
+
 $container['errorHandler'] = function ($c) {
     return function ($request, $response, $exception) use ($c) {
 
@@ -66,7 +69,12 @@ $container['errorHandler'] = function ($c) {
         ->withStatus(500)
         ->withHeader('Content-Type', 'application/json')
           //    ->write('Somethingggggg went wrong!');
-        ->withJson($error);
+      //  ->withJson($error);
+         ->write(json_encode($error,JSON_PRETTY_PRINT));
+     //return $response
+       //     ->withHeader('Content-Type', 'application/json')
+         //   ->write(json_encode($errresult,JSON_PRETTY_PRINT));
+    
     };
 };
 
@@ -150,10 +158,13 @@ $container['Promocodes'] = function($c){
 $container['RateCard'] = function($c){
     return new \App\Controllers\RateCard($c->get('logger'),$c['db']);
 };
-
-
+$container['DeveloperHelp'] = function($c){
+    return new \App\Controllers\DeveloperHelp($c->get('logger'),$c['db']);
+};
 $container['CronJobs'] = function($c){
     return new \App\Controllers\CronJobs($c->get('cronjob_logger'),$c['db']);
 };
+
+
 
 ?>

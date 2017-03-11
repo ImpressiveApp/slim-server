@@ -78,11 +78,11 @@ class CustomerDetails extends Controller
             {
              //   $status_authentication=false;
              //   if($arr[0]['Account_Status']==static::$messages['Active'])
-                $status_authentication=true;
+       /*         $status_authentication=true;
 
                 if($status_authentication)
                 {
-                    if($Password_Authentication) {
+         */           if($Password_Authentication) {
 
 
                         $applicable_promocodes=null;
@@ -101,24 +101,32 @@ class CustomerDetails extends Controller
                                 $applicable_promocodes[$name]=$arr1[0]['Message'];
                             }
                         }
+                        $app_config = array 
+                            (
+                                "Pincodes" => $this->properties['app_config']['pincodes'],
+                                "Wallet_Threshold" => $this->properties['app_config']['wallet_threshold']
+                            );
            
                         $auth = array
                             (
-                                "Customer_Mobno"=>$arr[0]['Customer_Mobno'],
-                                "EmailId"=>$arr[0]['Customer_Emailid'],
-                                "Customer_Name"=>$arr[0]['Customer_Name'],
-                                "Address_Line1"=>$arr[0]['Address_Line1'],
-                                "Address_Line2"=>$arr[0]['Address_Line2'],
-                                "Area"=>$arr[0]['Area'],
-                                "State"=>$arr[0]['State'],
-                                "City"=>$arr[0]['City'],
-                                "Pincode"=>$arr[0]['Pincode'],
-                                "Wallet"=>$arr[0]['Wallet'],
-                                "Account_Status"=>$arr[0]['Account_Status'],
-                                "Applicable_Promocodes"=>$applicable_promocodes,
-                                "Referral_Code"=>$arr[0]['Referral_Code'],
-                                "isRefProcessed"=>$arr[0]['isRefProcessed'],
-                                "Authenticated"=>$Password_Authentication
+                                "Customer_Mobno" => $arr[0]['Customer_Mobno'],
+                                "EmailId" => $arr[0]['Customer_Emailid'],
+                                "Customer_Name" => $arr[0]['Customer_Name'],
+                                "Address_Line1" => $arr[0]['Address_Line1'],
+                                "Address_Line2" => $arr[0]['Address_Line2'],
+                                "Area" => $arr[0]['Area'],
+                                "State" => $arr[0]['State'],
+                                "City" => $arr[0]['City'],
+                                "Pincode" => $arr[0]['Pincode'],
+                                "Wallet" => $arr[0]['Wallet'],
+                                "Pincodes" => $this->properties['app_config']['pincodes'],
+                                "Wallet_Threshold" => $this->properties['app_config']['wallet_threshold'],
+                                "App_Config" => $app_config,
+                                "Account_Status" => $arr[0]['Account_Status'],
+                                "Applicable_Promocodes" => $applicable_promocodes,
+                                "Referral_Code" => $arr[0]['Referral_Code'],
+                                "isRefProcessed" => $arr[0]['isRefProcessed'],
+                                "Authenticated" => $Password_Authentication
                             );
                  
                         $errresult['Data']=$auth;
@@ -129,13 +137,13 @@ class CustomerDetails extends Controller
                             $errresult['Data'] = static::$messages['No_Data'];
                         }
                      
-                }
+     /*           }
                 else {
                     $errresult['Resultcode'] = static::$messages['Resultcode_1'];
                     $errresult['Message'] = static::$messages['Account_Status_Not_Active'];
                     $errresult['Data'] = static::$messages['No_Data'];
                 }
-                     
+    */                 
             }
 
             else {
@@ -266,7 +274,7 @@ class CustomerDetails extends Controller
       
         //return $response->withJson($errresult);
         $sms_number=$data->Customer_Mobno;
-        if($data->Referree_Code != null)
+        if($data->isRefProcessed != 'U')
             $sms_type="create_new_customer_with_referralcode"; 
         else
             $sms_type="create_new_customer";
@@ -357,14 +365,15 @@ class CustomerDetails extends Controller
     public function getVerificationAccounts($request, $response)
     {  
         $handle = $this->db->prepare('Select * from customer_details where
-            Account_Status in (:status1,:status2) order by Account_Status' );
+            Account_Status NOT IN (:status) order by Account_Status' );
    
-        $status1 = static::$messages['Waiting_For_Verification'];
-        $status2 = static::$messages['ReVerification'];
-
-  
-        $handle->bindParam('status1', $status1);
-        $handle->bindParam('status2', $status2);
+//        $status1 = static::$messages['Waiting_For_Verification'];
+  //      $status2 = static::$messages['ReVerification'];
+ $status = static::$messages['Active'];
+        
+        //$handle->bindParam('status1', $status1);
+        //$handle->bindParam('status2', $status2);
+$handle->bindParam('status', $status);
 
         $result = $handle->execute();
     
@@ -410,15 +419,18 @@ class CustomerDetails extends Controller
         $sms_type=null;
         if($data) {
 
-            $handle = $this->db->prepare('update customer_details set   
-                Account_Status = :status, Wallet =(Wallet + :Wallet) where 
-                Customer_Mobno = :Customer_Mobno ');
+            $handle = $this->db->prepare("update customer_details set   
+                Account_Status = :status, Wallet =(Wallet + :Wallet)  where 
+                Customer_Mobno = :Customer_Mobno ");
    
             $handle->bindParam('status', $args['status']);
+           
             $handle->bindParam('Customer_Mobno', $args['mobno']);
             $handle->bindParam('Wallet', $args['wallet']);
-
+            
             $errresult['Message'] = static::$messages['Data_true'];
+
+
 
             if($args['status']!=$arr[0]['Account_Status']) {
                 
@@ -440,6 +452,42 @@ class CustomerDetails extends Controller
             }
 
             $result = $handle->execute();
+
+            if($arr[0]['Active_Timestamp']==null && 
+                $args['status']==static::$messages['Active']) {
+           
+                $handle = $this->db->prepare('update customer_details set   
+                Active_Timestamp = NOW() where 
+                Customer_Mobno = :Customer_Mobno ');
+              
+                $handle->bindParam('Customer_Mobno', $args['mobno']);
+                $result = $handle->execute();
+            }
+            if($args['status']==static::$messages['Active']) {
+           
+                $handle = $this->db->prepare("update customer_details set   
+                Message = '' where 
+                Customer_Mobno = :Customer_Mobno");
+         
+                $handle->bindParam('Customer_Mobno', $args['mobno']);
+                $result = $handle->execute();
+             }
+
+            if($args['status']==static::$messages['Rejected']) {
+           
+                $handle = $this->db->prepare('update customer_details set   
+                Message = :message where 
+                Customer_Mobno = :Customer_Mobno ');
+                $handle->bindParam('message', $args['message']);
+                $handle->bindParam('Customer_Mobno', $args['mobno']);
+                $result = $handle->execute();
+             }
+
+//    $bool = false;
+//else $bool = true;
+//$errresult['M'] = $bool;
+
+
             $result1= $handle1->execute();
         
             $data = $handle1->fetchObject();
@@ -461,7 +509,11 @@ class CustomerDetails extends Controller
         $this->db->commit();
         $this->db = null;
       
-        return $response->withJson($errresult);
+    //    return $response->withJson($errresult);
+        return $response
+            ->withHeader('Content-Type', 'application/json')
+            ->write(json_encode($errresult,JSON_PRETTY_PRINT));
+
     }  
 
     public function setPassword($request, $response)

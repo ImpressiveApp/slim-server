@@ -11,7 +11,7 @@ class Controller
 {
 	protected $db;
     protected $logger;
-
+    protected $properties;
     protected static $messages = [
         
         //General 
@@ -34,8 +34,11 @@ class Controller
         'Admin' => 'Admin',
         'Customer' => 'Customer',
         'Active' => 'Active',
+        'Inactive' => 'Inactive',
+
         'Waiting_For_Verification' => 'Waiting For Verification',
         'ReVerification' => 'ReVerification',
+        'Rejected' => 'Rejected',
         'Admin_ReVerify' => 'Notification sent to Admin to ReVerify your Account.',
         
         'Check_Mobile' => 'Please Check the Mobile Number.',
@@ -123,6 +126,9 @@ class Controller
     {
         $this->db = $db;
         $this->logger = $logger;
+
+        $path = __DIR__ .'/../../properties.ini';
+        $this->properties = parse_ini_file($path,true);
     }
 
     public function insertTransaction($customer_Mobno,$amount,$order_id,$comment)
@@ -215,6 +221,10 @@ $template = array(
 
     public function sendNewSMS($number,$type,$sms_data)
     {
+
+        
+        if($this->properties['sms_option']['send_sms']){
+            $this->logger->info("SMS Active");
        /* $template = array(
             "Your user profile was successfully created in impressive application with id ".$data.".Login into our appplication for more details",
             "Your worker profile was successfully created in impressive application with id ".$data.".Login into our appplication for more details",
@@ -247,7 +257,7 @@ $template = array(
         $password = "rahul@19";
         // Replace with the destination mobile Number to which you want to send sms
         $msisdn = $number;
-        $msisdn = 9884873929;
+        $msisdn = 7418217465;// 9884873929;
 
         // Replace if you have your own Six character Sender ID, or check with our support team.
         $sid = "SMSHUB";
@@ -266,11 +276,14 @@ $template = array(
         $smsrl = "http://cloud.smsindiahub.in/vendorsms/pushsms.aspx?user=".$user."&password=".$password."&msisdn=".$msisdn."&sid=".$sid."&msg=".$msg."&fl=".$fl."&gwid=".$gwid."";
         //$smsrl = "http://cloud.smsindiahub.in/vendorsms/pushsms.aspx?user=Impressive application&password=rahul@19&msisdn=9981188868&sid=SMSHUB&msg=Thank you for contacting with us. We will get back to you soon&fl=0&gwid=2";
   //      echo $smsrl;
+$this->logger->info($type);
+        $this->logger->info($msg);
+        $this->logger->info($smsrl);
         $ch = curl_init($smsrl);
         curl_setopt($ch, CURLOPT_HEADER, 0);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
           $this->logger->info("before output");
-        $output = curl_exec($ch);
+  //      $output = curl_exec($ch);
         $this->logger->info("after output");
    //     $this->logger->info("after output".$output);
 
@@ -320,7 +333,8 @@ $template = array(
   //      $this->db = null;
 
 }
-   
+   else
+$this->logger->info("SMS Not Active");
 
 /*
 	public function __get($property)
@@ -334,6 +348,7 @@ $template = array(
 */	
 
 	
+}
 
 	
 }

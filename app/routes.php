@@ -40,15 +40,9 @@ $app->post($pattern.'/getTransactionHistory/','Transactions:getTransactionHistor
 $app->post($pattern.'/createPromocode/','Promocodes:createPromocode');
 $app->post($pattern.'/getPromoCodes/','Promocodes:getPromoCodes');
 
-
-
 // Ratecard Table
 $app->post($pattern.'/getRateCard/','RateCard:getRateCard');
 $app->post($pattern.'/updateRateCard/','RateCard:updateRateCard');
-$app->get($pattern.'/sms/','RateCard:sms');
-$app->get($pattern.'/readProperties/','RateCard:readProperties');
-
-
 
 // Cron Jobs
 $app->get($pattern.'/referralcodeProcessor/','CronJobs:referralcodeProcessor');
@@ -57,6 +51,11 @@ $app->get($pattern.'/allCronJobs/','CronJobs:allCronJobs');
 $app->get($pattern.'/deleteExpiredFestivalPromocodes/','CronJobs:deleteExpiredFestivalPromocodes');
 $app->get($pattern.'/deleteExpiredOtherPromocodes/','CronJobs:deleteExpiredOtherPromocodes');
 $app->get($pattern.'/createScheduledPromocodes/','CronJobs:createScheduledPromocodes');
+
+// DeveloperHelp
+$app->get($pattern.'/test/','DeveloperHelp:test');
+$app->get($pattern.'/sms/','DeveloperHelp:sms');
+$app->get($pattern.'/readProperties/','DeveloperHelp:readProperties');
 
 
 ////////////////////////////////////////
