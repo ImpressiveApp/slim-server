@@ -44,6 +44,9 @@ $app->post($pattern.'/getPromoCodes/','Promocodes:getPromoCodes');
 $app->post($pattern.'/getRateCard/','RateCard:getRateCard');
 $app->post($pattern.'/updateRateCard/','RateCard:updateRateCard');
 
+// App Config
+$app->post($pattern.'/getAppConfig/','AppConfig:getAppConfig');
+
 // Cron Jobs
 $app->get($pattern.'/referralcodeProcessor/','CronJobs:referralcodeProcessor');
 $app->get($pattern.'/deleteExpiredPromocodes/','CronJobs:deleteExpiredPromocodes');
@@ -51,6 +54,9 @@ $app->get($pattern.'/allCronJobs/','CronJobs:allCronJobs');
 $app->get($pattern.'/deleteExpiredFestivalPromocodes/','CronJobs:deleteExpiredFestivalPromocodes');
 $app->get($pattern.'/deleteExpiredOtherPromocodes/','CronJobs:deleteExpiredOtherPromocodes');
 $app->get($pattern.'/createScheduledPromocodes/','CronJobs:createScheduledPromocodes');
+
+
+
 
 // DeveloperHelp
 $app->get($pattern.'/test/','DeveloperHelp:test');

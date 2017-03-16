@@ -1,0 +1,8 @@
+index.html
+composer.lock
+composer.json
+.htaccess
+vendor
+public
+app
+logs
