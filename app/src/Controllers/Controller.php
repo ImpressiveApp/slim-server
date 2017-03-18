@@ -59,6 +59,9 @@ class Controller
         'Delivery_Slot_Updated' => 'Delivery Slot Updated.',
 
 
+        //  RetailOrderDetails
+        'Open' => 'Open',
+
         //  OrderDetails
         'Closed' => 'Closed',
         'Cancelled' => 'Cancelled',
@@ -68,6 +71,8 @@ class Controller
         'No_Orders_Today' => 'No Orders for Today.',
         'No_Orders_Month' => 'No Orders in Month of ',
 
+        'Show_SMS' => 'Kindly show the SMS while collecting your clothes',
+        'Retail_Order_Created' => 'Your Retail Order has been Created Successfully.',
         'Order_Created' => 'Your Order has been Created Successfully.',
         'Order_Id' => 'Your Order Id is ',
        

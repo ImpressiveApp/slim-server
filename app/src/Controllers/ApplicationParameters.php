@@ -2,9 +2,9 @@
 
 namespace App\Controllers;
 
-class AppConfig extends Controller
+class ApplicationParameters extends Controller
 {
-	public function getAppConfig($request, $response)
+	public function getApplicationParameters($request, $response)
     {
     	$errresult['Resultcode'] = static::$messages['Resultcode_0'];;
 

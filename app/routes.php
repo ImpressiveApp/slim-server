@@ -45,7 +45,13 @@ $app->post($pattern.'/getRateCard/','RateCard:getRateCard');
 $app->post($pattern.'/updateRateCard/','RateCard:updateRateCard');
 
 // App Config
-$app->post($pattern.'/getAppConfig/','AppConfig:getAppConfig');
+$app->post($pattern.'/getApplicationParameters/','ApplicationParameters:getApplicationParameters');
+
+//RetailOrderDetails
+$app->post($pattern.'/getRetailOrders/','RetailOrderDetails:getRetailOrders');
+$app->post($pattern.'/createRetailOrder/','RetailOrderDetails:createRetailOrder');
+$app->post($pattern.'/updateRetailOrder/','RetailOrderDetails:updateRetailOrder');
+
 
 // Cron Jobs
 $app->get($pattern.'/referralcodeProcessor/','CronJobs:referralcodeProcessor');

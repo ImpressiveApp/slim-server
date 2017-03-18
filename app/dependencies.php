@@ -158,8 +158,11 @@ $container['Promocodes'] = function($c){
 $container['RateCard'] = function($c){
     return new \App\Controllers\RateCard($c->get('logger'),$c['db']);
 };
-$container['AppConfig'] = function($c){
-    return new \App\Controllers\AppConfig($c->get('logger'),$c['db']);
+$container['ApplicationParameters'] = function($c){
+    return new \App\Controllers\ApplicationParameters($c->get('logger'),$c['db']);
+};
+$container['RetailOrderDetails'] = function($c){
+    return new \App\Controllers\RetailOrderDetails($c->get('logger'),$c['db']);
 };
 $container['DeveloperHelp'] = function($c){
     return new \App\Controllers\DeveloperHelp($c->get('logger'),$c['db']);
